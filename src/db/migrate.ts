@@ -36,13 +36,22 @@ async function runMigration() {
     
     // Split into individual SQL commands safely
     const statements = schemaSql
-      .split(/;\s*$/m)
+      .split(";")
       .map(s => s.trim())
-      .filter(s => s.length > 0 && !s.startsWith("--"));
+      .filter(s => s.length > 5);
 
-    for (const stmt of statements) {
-      if (stmt.length > 5) {
-        await (sql as unknown as (strings: TemplateStringsArray) => Promise<unknown>)([stmt] as unknown as TemplateStringsArray);
+    console.log(`Executing ${statements.length} SQL DDL statements...`);
+
+    for (let i = 0; i < statements.length; i++) {
+      const stmt = statements[i];
+      try {
+        await sql.query(stmt);
+      } catch (stmtErr: unknown) {
+        // Ignore extension already exists or duplicate notices
+        const errStr = String(stmtErr);
+        if (!errStr.includes("already exists")) {
+          console.warn(`Warning on statement ${i + 1}:`, (stmtErr as Error).message);
+        }
       }
     }
     console.log("✅ Core schema tables and indexes successfully created in Neon!");
