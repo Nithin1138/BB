@@ -1,26 +1,346 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-serif), "Newsreader", Georgia, serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Editorial Swiss Minimalist Palette (Light) */
+    --bg-primary: #FFFFFF;
+    --surface-white: #FFFFFF;
+    --surface-soft: #F4F4F5;
+    --border-color: #E4E4E7;
+    --border-hover: #D4D4D8;
+    --text-primary: #09090B;
+    --text-secondary: #52525B;
+    --text-muted: #71717A;
+
+    /* Signature Electric Editorial Accent */
+    --brand-accent: #FF4500; /* Electric International Orange */
+    --brand-accent-hover: #E03E00;
+    --brand-gold: #F59E0B; /* Golden Amber */
+    --status-positive: #10B981;
+    --status-warning: #F59E0B;
+    --status-negative: #EF4444;
+
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --card-shadow-hover: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+    --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    color-scheme: light;
+  }
+
+  html.dark, .dark {
+    /* Editorial Swiss Minimalist Palette (Dark) */
+    --bg-primary: #0C0C0D;
+    --surface-white: #141416;
+    --surface-soft: #1B1B1F;
+    --border-color: #232328;
+    --border-hover: #32323A;
+    --text-primary: #F4F4F5;
+    --text-secondary: #A1A1AA;
+    --text-muted: #71717A;
+
+    --brand-accent: #FF5A1F; /* Electric Signal Orange */
+    --brand-accent-hover: #FF4500;
+    --brand-gold: #F59E0B;
+    --status-positive: #10B981;
+    --status-warning: #F59E0B;
+    --status-negative: #EF4444;
+
+    --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    --card-shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.8);
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    letter-spacing: -0.015em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    overscroll-behavior-y: none;
+    transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  }
+
+  button, a {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Monospace Tabular Figures */
+  .tabular-nums, .font-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ========================================================
+   GLOBAL SMOOTH THEME & ELEMENT ADAPTATION
+   ======================================================== */
+
+header,
+nav,
+footer,
+.editorial-card,
+button,
+a,
+input,
+textarea,
+select {
+  transition-property: background-color, border-color, color, box-shadow, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark Theme Automatic Utility Mapping */
+html.dark body {
+  background-color: #0C0C0D !important;
+  color: #F4F4F5 !important;
+}
+
+html.dark .bg-white,
+html.dark .bg-\[\#FFFFFF\] {
+  background-color: #141416 !important;
+}
+
+html.dark .bg-\[\#F7F8FA\],
+html.dark .bg-\[\#F8F9FA\],
+html.dark .bg-\[\#FAF9F6\],
+html.dark .bg-gray-50,
+html.dark .bg-slate-50 {
+  background-color: #0C0C0D !important;
+}
+
+html.dark .bg-\[\#F1F3F6\],
+html.dark .bg-\[\#F2EFE9\],
+html.dark .bg-gray-100,
+html.dark .bg-slate-100 {
+  background-color: #1B1B1F !important;
+}
+
+html.dark .border-\[\#E5E7EB\],
+html.dark .border-\[\#E2E4E9\],
+html.dark .border-\[\#E8E6DF\],
+html.dark .border-\[\#E4E4E7\],
+html.dark .border-\[\#D1D5DB\],
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+  border-color: #232328 !important;
+}
+
+html.dark .text-\[\#111318\],
+html.dark .text-\[\#090A0E\],
+html.dark .text-\[\#121210\],
+html.dark .text-\[\#09090B\],
+html.dark .text-slate-900,
+html.dark .text-gray-900 {
+  color: #F4F4F5 !important;
+}
+
+html.dark .text-\[\#626873\],
+html.dark .text-\[\#525866\],
+html.dark .text-\[\#5C5B56\],
+html.dark .text-\[\#52525B\],
+html.dark .text-gray-600,
+html.dark .text-slate-600 {
+  color: #A1A1AA !important;
+}
+
+html.dark .text-\[\#8B919B\],
+html.dark .text-\[\#868C98\],
+html.dark .text-\[\#8A8982\],
+html.dark .text-\[\#71717A\],
+html.dark .text-gray-400,
+html.dark .text-slate-400 {
+  color: #71717A !important;
+}
+
+/* Header & Mobile Bottom Nav */
+html.dark header {
+  background-color: rgba(14, 14, 16, 0.94) !important;
+  border-color: #232328 !important;
+}
+
+html.dark nav[aria-label="Mobile Navigation"] {
+  background-color: rgba(14, 14, 16, 0.96) !important;
+  border-color: #232328 !important;
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Form Inputs, Textareas, Selects */
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html.dark textarea,
+html.dark select {
+  background-color: #17171B !important;
+  border-color: #26262D !important;
+  color: #F3F2EE !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #656460 !important;
+}
+
+html.dark input:focus,
+html.dark textarea:focus,
+html.dark select:focus {
+  border-color: #FF453A !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.18) !important;
+}
+
+/* Dark Mode Hover Overrides */
+html.dark .hover\:bg-\[\#F1F3F6\]:hover,
+html.dark .hover\:bg-\[\#F7F8FA\]:hover,
+html.dark .hover\:bg-\[\#F8F9FA\]:hover,
+html.dark .hover\:bg-gray-50:hover,
+html.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-gray-100:hover {
+  background-color: #1D1D22 !important;
+}
+
+html.dark .hover\:text-\[\#111318\]:hover,
+html.dark .hover\:text-\[\#090A0E\]:hover,
+html.dark .hover\:text-\[\#121210\]:hover {
+  color: #FFFFFF !important;
+}
+
+html.dark .hover\:border-\[\#D1D5DB\]:hover,
+html.dark .hover\:border-\[\#CDD0D5\]:hover {
+  border-color: #383842 !important;
+}
+
+/* Modals & Slide-over Drawers in Dark Mode */
+html.dark [role="dialog"] > div:last-child {
+  background-color: #131316;
+  border-color: #24242A;
+  color: #F3F2EE;
+}
+
+/* ========================================================
+   MICRO-INTERACTIONS & MOTION DESIGN
+   ======================================================== */
+
+/* Editorial Cards with fluid lift & shadows */
+.editorial-card {
+  background-color: var(--surface-white);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.22s var(--ease-spring), box-shadow 0.22s var(--ease-spring), border-color 0.2s ease, background-color 0.25s ease;
+}
+
+.editorial-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.editorial-card:active {
+  transform: scale(0.985);
+}
+
+/* Tactile Spring Buttons */
+.btn-spring {
+  transition: transform 0.18s var(--ease-spring), background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-spring:active {
+  transform: scale(0.96);
+}
+
+/* Interactive Pill Taps */
+.pill-tap {
+  transition: transform 0.15s var(--ease-spring), background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.pill-tap:active {
+  transform: scale(0.94);
+}
+
+/* Route & Page Enter Animation */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 0.25s var(--ease-spring) forwards;
+}
+
+/* Soft Pulsing Live Indicators */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.96); }
+}
+
+.subtle-pulse {
+  animation: pulse-soft 2.4s infinite ease-in-out;
+}
+
+/* Custom Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 9999px;
+  transition: background 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #283348;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3B4861;
+}
+
+/* Hide scrollbar utility for touch drag carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe area padding utilities for mobile phones with notch / home bar */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+.pt-safe {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
 }
