@@ -99,14 +99,14 @@ export function Header({ onOpenSearch, onOpenMobileMenu }: HeaderProps) {
         </div>
 
         {/* Right actions: Search, Notifications, Role Switcher / Profile */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-1 sm:gap-2.5">
           {/* Global Search trigger */}
           <button
             onClick={onOpenSearch}
-            className="flex items-center gap-2 text-xs text-[#71717A] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-[#F4F4F5] bg-white hover:bg-[#F4F4F5] dark:bg-[#141416] dark:hover:bg-[#1B1B1F] border border-[#E4E4E7] hover:border-[#09090B]/30 dark:border-[#232328] dark:hover:border-[#F4F4F5]/30 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer active:scale-95"
+            className="flex items-center gap-2 text-xs text-[#71717A] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-[#F4F4F5] bg-transparent sm:bg-white hover:bg-[#F4F4F5] dark:sm:bg-[#141416] dark:hover:bg-[#1B1B1F] border border-transparent sm:border-[#E4E4E7] hover:border-[#09090B]/30 dark:sm:border-[#232328] dark:hover:border-[#F4F4F5]/30 p-2 sm:px-3 sm:py-1.5 rounded-lg transition-all duration-150 cursor-pointer active:scale-95"
             aria-label="Search BBPulse"
           >
-            <Search className="w-3.5 h-3.5 text-[#71717A]" />
+            <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-[#71717A]" />
             <span className="hidden sm:inline text-xs font-mono">Search...</span>
             <kbd className="hidden lg:inline text-[10px] bg-[#F4F4F5] dark:bg-[#1B1B1F] border border-[#E4E4E7] dark:border-[#232328] text-[#71717A] dark:text-[#A1A1AA] px-1.5 py-0.5 rounded font-mono">
               ⌘K
@@ -116,8 +116,8 @@ export function Header({ onOpenSearch, onOpenMobileMenu }: HeaderProps) {
           {/* Theme Toggle Button */}
           <ThemeToggle />
 
-          {/* Notification dropdown */}
-          <div className="relative">
+          {/* Notification dropdown: hidden on mobile */}
+          <div className="relative hidden sm:block">
             <button
               onClick={() => setShowNotifDropdown(!showNotifDropdown)}
               className="relative p-2 text-[#52525B] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-[#F4F4F5] hover:bg-[#F4F4F5] dark:hover:bg-[#1B1B1F] rounded-lg transition-all duration-150 active:scale-90 cursor-pointer"
@@ -228,7 +228,7 @@ export function Header({ onOpenSearch, onOpenMobileMenu }: HeaderProps) {
           {user ? (
             <Link
               href={`/u/${user.username}`}
-              className="flex items-center gap-2 pl-0.5 group"
+              className="flex items-center gap-2 pl-0.5 group shrink-0"
               title="View Public Profile"
             >
               <img
@@ -240,7 +240,7 @@ export function Header({ onOpenSearch, onOpenMobileMenu }: HeaderProps) {
           ) : (
             <button
               onClick={() => openAuthModal("google")}
-              className="text-xs font-semibold bg-[#09090B] dark:bg-[#F4F4F5] hover:bg-black dark:hover:bg-white text-white dark:text-[#09090B] px-3.5 py-1.5 rounded-md transition-all shadow-xs cursor-pointer active:scale-95"
+              className="text-xs font-semibold bg-[#09090B] dark:bg-[#F4F4F5] hover:bg-black dark:hover:bg-white text-white dark:text-[#09090B] px-3 py-1.5 rounded-md transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
             >
               Sign In
             </button>
@@ -250,7 +250,7 @@ export function Header({ onOpenSearch, onOpenMobileMenu }: HeaderProps) {
           {onOpenMobileMenu && (
             <button
               onClick={onOpenMobileMenu}
-              className="p-1.5 sm:p-2 text-[#52525B] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-[#F4F4F5] hover:bg-[#F4F4F5] dark:hover:bg-[#141416] rounded-md transition-all active:scale-90 md:hidden cursor-pointer"
+              className="p-2 text-[#52525B] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-[#F4F4F5] hover:bg-[#F4F4F5] dark:hover:bg-[#141416] rounded-lg transition-all active:scale-90 md:hidden cursor-pointer shrink-0"
               aria-label="Open Navigation Menu"
             >
               <Menu className="w-5 h-5" />

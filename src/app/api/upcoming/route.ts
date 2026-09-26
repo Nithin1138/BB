@@ -54,7 +54,15 @@ export async function GET() {
   if (isDbConfigured) {
     const events = await UpcomingRepository.getAll(20);
     if (events && events.length > 0) {
-      return NextResponse.json({ events, source: "neon" });
+      // Deduplicate by title to ensure clean single representation
+      const seen = new Set<string>();
+      const cleanEvents = events.filter(e => {
+        const key = e.title.trim().toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      return NextResponse.json({ events: cleanEvents, source: "neon" });
     }
   }
 

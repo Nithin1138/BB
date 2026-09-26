@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { ShareCardConfig } from "@/types";
 import { X, Copy, Check, Download, Share2, Sparkles } from "lucide-react";
 
@@ -13,9 +14,25 @@ interface ShareModalProps {
 export function ShareModal({ isOpen, onClose, config }: ShareModalProps) {
   const [copied, setCopied] = useState(false);
   const [cardTheme, setCardTheme] = useState<"editorial_light" | "obsidian_noir">("editorial_light");
+  const [mounted, setMounted] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !mounted) return null;
 
   const handleCopyLink = () => {
     const url = typeof window !== "undefined" ? window.location.origin + (config.url || "") : "https://bbpulse.app";
@@ -86,14 +103,17 @@ export function ShareModal({ isOpen, onClose, config }: ShareModalProps) {
     }
   };
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="share-modal-title"
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-[2px] p-0 sm:p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/75 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-150"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
-      <div className="bg-white dark:bg-[#141416] border-t sm:border border-[#E4E4E7] dark:border-[#232328] rounded-t-2xl sm:rounded-xl w-full max-w-[800px] shadow-2xl p-4 sm:p-6 relative text-[#09090B] dark:text-[#F4F4F5] max-h-[92vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
+      <div className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-2xl sm:rounded-xl w-full max-w-[760px] shadow-2xl p-4 sm:p-6 relative text-[#09090B] dark:text-[#F4F4F5] my-auto max-h-[92vh] overflow-y-auto animate-in zoom-in-95 duration-150">
         {/* Mobile Grab Handle */}
         <div className="w-12 h-1 bg-[#E4E4E7] dark:bg-[#32323A] rounded-full mx-auto mb-3 sm:hidden" />
 
@@ -270,6 +290,7 @@ export function ShareModal({ isOpen, onClose, config }: ShareModalProps) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

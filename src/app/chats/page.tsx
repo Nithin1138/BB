@@ -26,7 +26,7 @@ export default function ChatsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [dbSource, setDbSource] = useState<string>("connecting");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   // Fetch chat rooms
   useEffect(() => {
@@ -65,9 +65,14 @@ export default function ChatsPage() {
     loadMessages();
   }, [activeRoomId]);
 
-  // Scroll to bottom when new messages arrive
+  // Scroll to bottom of message container only when new messages arrive (without moving window)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth"
+      });
+    }
   }, [messages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -210,7 +215,7 @@ export default function ChatsPage() {
           </div>
 
           {/* Messages Stream */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.length > 0 ? (
               messages.map(msg => (
                 <div key={msg.id} className="flex items-start gap-3 group">
@@ -241,7 +246,6 @@ export default function ChatsPage() {
                 <p className="text-[11px] max-w-xs">Be the first to share your analysis or reaction.</p>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Message Input Bar */}
@@ -253,7 +257,9 @@ export default function ChatsPage() {
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder={`Post message to #${activeRoom?.name}...`}
-                  className="flex-1 text-xs px-3.5 py-2.5 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-md outline-hidden text-[#09090B] dark:text-[#F4F4F5] focus:border-[#FF4500] dark:focus:border-[#FF4500] transition-colors"
+                  autoComplete="off"
+                  enterKeyHint="send"
+                  className="flex-1 text-base sm:text-xs px-3.5 py-2.5 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-md outline-hidden text-[#09090B] dark:text-[#F4F4F5] focus:border-[#FF4500] dark:focus:border-[#FF4500] transition-colors"
                 />
                 <button
                   type="submit"

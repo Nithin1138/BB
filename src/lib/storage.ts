@@ -30,8 +30,8 @@ import {
 
 const STORAGE_KEYS = {
   USER: "bbpulse_user_v1",
-  CONTESTANTS: "bbpulse_contestants_v1",
-  POLL: "bbpulse_poll_v1",
+  CONTESTANTS: "bbpulse_contestants_v2",
+  POLL: "bbpulse_poll_v2",
   VOTES: "bbpulse_votes_v1",
   POSTS: "bbpulse_posts_v1",
   COMMENTS: "bbpulse_comments_v1",
@@ -85,7 +85,14 @@ export const StorageService = {
 
   // Contestants
   getContestants(): Contestant[] {
-    return safeGet<Contestant[]>(STORAGE_KEYS.CONTESTANTS, INITIAL_CONTESTANTS);
+    const list = safeGet<Contestant[]>(STORAGE_KEYS.CONTESTANTS, INITIAL_CONTESTANTS);
+    return list.map(c => {
+      const match = INITIAL_CONTESTANTS.find(ic => ic.id === c.id);
+      if (match?.avatar_url && match.avatar_url.includes("blob.upstash.io")) {
+        return { ...c, avatar_url: match.avatar_url };
+      }
+      return c;
+    });
   },
   getContestantBySlug(slug: string): Contestant | undefined {
     const contestants = this.getContestants();
@@ -98,7 +105,17 @@ export const StorageService = {
 
   // Polls & Voting
   getActivePoll(): Poll {
-    return safeGet<Poll>(STORAGE_KEYS.POLL, INITIAL_POLL);
+    const poll = safeGet<Poll>(STORAGE_KEYS.POLL, INITIAL_POLL);
+    if (poll?.options) {
+      poll.options = poll.options.map(opt => {
+        const contestant = INITIAL_CONTESTANTS.find(c => c.id === opt.contestant_id);
+        if (contestant?.avatar_url) {
+          return { ...opt, contestant_avatar: contestant.avatar_url };
+        }
+        return opt;
+      });
+    }
+    return poll;
   },
   getPoll(): Poll {
     return this.getActivePoll();

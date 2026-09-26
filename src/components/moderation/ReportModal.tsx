@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { StorageService } from "@/lib/storage";
 import { useAuth } from "@/context/AuthContext";
 import { ShieldAlert, X, CheckCircle2 } from "lucide-react";
@@ -34,8 +35,24 @@ export function ReportModal({
   const [selectedReason, setSelectedReason] = useState(REPORT_REASONS[0]);
   const [description, setDescription] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !mounted) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,14 +77,17 @@ export function ReportModal({
     }, 2000);
   };
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="report-modal-title"
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-[2px] p-0 sm:p-4 animate-in fade-in duration-150"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/75 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-150"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
-      <div className="bg-[#FAF9F6] dark:bg-[#131316] border border-[#E8E6DF] dark:border-[#24242A] rounded-t-3xl sm:rounded-2xl w-full max-w-[440px] max-h-[92vh] overflow-y-auto p-5 sm:p-6 shadow-2xl relative text-[#121210] dark:text-[#F3F2EE] animate-in slide-in-from-bottom duration-200">
+      <div className="bg-[#FAF9F6] dark:bg-[#131316] border border-[#E8E6DF] dark:border-[#24242A] rounded-2xl w-full max-w-[440px] my-auto max-h-[92vh] overflow-y-auto p-5 sm:p-6 shadow-2xl relative text-[#121210] dark:text-[#F3F2EE] animate-in zoom-in-95 duration-150">
         {/* Mobile drag handle */}
         <div className="w-12 h-1.5 bg-[#E8E6DF] dark:bg-[#333338] rounded-full mx-auto mb-3 sm:hidden" />
 
@@ -162,6 +182,7 @@ export function ReportModal({
           </form>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

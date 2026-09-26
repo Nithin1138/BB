@@ -370,7 +370,7 @@ CREATE INDEX IF NOT EXISTS idx_direct_messages_sender ON direct_messages(sender_
 CREATE TABLE IF NOT EXISTS upcoming_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   season_id UUID REFERENCES seasons(id) ON DELETE CASCADE,
-  title VARCHAR(200) NOT NULL,
+  title VARCHAR(200) NOT NULL UNIQUE,
   event_type VARCHAR(50) NOT NULL CHECK (event_type IN ('eviction', 'weekend_episode', 'captaincy_task', 'nomination_cycle', 'wildcard_entry', 'special_task')),
   scheduled_time TIMESTAMPTZ NOT NULL,
   description TEXT NOT NULL,

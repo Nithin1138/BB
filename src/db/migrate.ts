@@ -101,7 +101,7 @@ async function runMigration() {
           'scheduled',
           '/contestants/nominations'
         )
-      ON CONFLICT DO NOTHING;
+      ON CONFLICT (title) DO NOTHING;
     `;
 
     console.log("🎉 Neon PostgreSQL Database fully migrated and seeded successfully!");
