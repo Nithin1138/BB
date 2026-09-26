@@ -148,8 +148,8 @@ export const BB10_NOMINATION_WEEKS: NominationWeekRecord[] = [
       "Thrigun", "Temper Vamsi", "Varshini Sounderajan"
     ],
     evicted: [
-      { name: "Charan Mahadev", day: 4, reason: "Evicted by housemates vote (9-4 vs Ramprasad)", avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80" },
-      { name: "Chaitra Rai", day: 5, reason: "Evicted by internal 4-way housemates vote (3-1)", avatar_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=320&q=80" }
+      { name: "Charan Mahadev", day: 4, reason: "Evicted by housemates vote (9-4 vs Ramprasad)", avatar_url: "https://b374dd683233.blob.upstash.io/CHARAN.jpg" },
+      { name: "Chaitra Rai", day: 5, reason: "Evicted by internal 4-way housemates vote (3-1)", avatar_url: "https://b374dd683233.blob.upstash.io/CHAITRA%20RAI.jpg" }
     ],
     notes: [
       "On Day 1, Bigg Boss announced all 16 contestants face the public vote to earn official housemate status.",
@@ -169,10 +169,10 @@ export const BB10_NOMINATION_WEEKS: NominationWeekRecord[] = [
       "Sudheer Reddy", "Thrigun", "Varshini Sounderajan"
     ],
     re_entered: [
-      { name: "Charan Mahadev", day: 11, reason: "Overwhelming public vote brought him back under Power of People twist", avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80" }
+      { name: "Charan Mahadev", day: 11, reason: "Overwhelming public vote brought him back under Power of People twist", avatar_url: "https://b374dd683233.blob.upstash.io/CHARAN.jpg" }
     ],
     evicted: [
-      { name: "Krishnudu", day: 14, reason: "Fewest public votes in 11-way eviction ballot", avatar_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=320&q=80" }
+      { name: "Krishnudu", day: 14, reason: "Fewest public votes in 11-way eviction ballot", avatar_url: "https://b374dd683233.blob.upstash.io/KRISHNUDU.jpg" }
     ],
     notes: [
       "Nominations were determined by the Pole & Axe race. Winners picked Silver Axe (1 nomination) or Golden Axe (2 nominations). Losers automatically took 1 nomination vote.",
@@ -195,7 +195,7 @@ export const BB10_NOMINATION_WEEKS: NominationWeekRecord[] = [
       "Sudheer Reddy", "Thrigun", "Temper Vamsi", "Varshini Sounderajan"
     ],
     walked: [
-      { name: "Mithilesh Reddy", day: 20, reason: "Accepted ₹15 Lakhs cash temptation from prize money and walked out", avatar_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=320&q=80" }
+      { name: "Mithilesh Reddy", day: 20, reason: "Accepted ₹15 Lakhs cash temptation from prize money and walked out", avatar_url: "https://b374dd683233.blob.upstash.io/MYDHILI.jpg" }
     ],
     evicted: [],
     notes: [
@@ -884,7 +884,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     name: "Mithilesh Reddy",
     telugu_name: "మిథిలేష్ రెడ్డి",
     slug: "mithilesh-reddy",
-    avatar_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80",
+    avatar_url: "https://b374dd683233.blob.upstash.io/MYDHILI.jpg",
     profession: "Model & Social Media Personality (Wildcard)",
     short_bio: "Agnipariksha 2 wildcard entrant on Day 19 who defeated Ramakrishna in a tiebreaker, then stunned the entire house by accepting ₹15 Lakhs cash temptation to walk on Day 20.",
     status: "walked",

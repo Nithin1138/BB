@@ -198,7 +198,7 @@ export default function PostDetailPage() {
               <img
                 src={activePost.author_avatar}
                 alt=""
-                className="w-10 h-10 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs"
               />
             </Link>
             <div className="min-w-0">
@@ -327,7 +327,7 @@ export default function PostDetailPage() {
                     <img
                       src={comment.author_avatar}
                       alt=""
-                      className="w-6 h-6 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shrink-0"
+                      className="w-10 h-10 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
                     />
                     <Link
                       href={`/u/${comment.author_username}`}
@@ -391,7 +391,7 @@ export default function PostDetailPage() {
                         <img
                           src={reply.author_avatar}
                           alt=""
-                          className="w-5 h-5 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shrink-0"
+                          className="w-8 h-8 rounded-lg object-cover border border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
                         />
                         <Link
                           href={`/u/${reply.author_username}`}

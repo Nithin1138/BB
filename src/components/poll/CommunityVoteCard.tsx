@@ -150,23 +150,23 @@ export function CommunityVoteCard({ initialPoll = INITIAL_POLL, onVoted }: Commu
               )}
 
               <div className="relative z-10 flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                   <img
                     src={option.contestant_avatar}
                     alt={option.contestant_name}
-                    className="w-9 h-9 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shadow-xs shrink-0"
                   />
-                  <div>
-                    <div className="text-sm font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] flex items-center gap-2">
+                  <div className="min-w-0">
+                    <div className="text-base sm:text-lg font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] flex items-center gap-2 flex-wrap">
                       <span>{option.contestant_name}</span>
                       {isVotedOption && (
-                        <span className="font-mono text-[9px] uppercase tracking-wider font-bold text-[#FF4500] bg-[#FF4500]/15 px-1.5 py-0.5 rounded">
+                        <span className="font-mono text-[9px] uppercase tracking-wider font-bold text-[#FF4500] bg-[#FF4500]/15 px-1.5 py-0.5 rounded shrink-0">
                           Your Ballot
                         </span>
                       )}
                     </div>
                     {hasVoted && (
-                      <div className="font-mono text-[11px] text-[#71717A]">
+                      <div className="font-mono text-xs text-[#71717A] mt-0.5">
                         {option.vote_count.toLocaleString()} votes
                       </div>
                     )}

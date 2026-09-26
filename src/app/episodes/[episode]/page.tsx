@@ -144,9 +144,9 @@ export default function EpisodeDetailPage() {
                         <Link
                           key={c.id}
                           href={`/contestants/${c.slug}`}
-                          className="flex items-center gap-1 text-[11px] font-mono text-[#09090B] dark:text-[#F4F4F5] bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] px-2 py-0.5 rounded-sm hover:border-[#FF4500] transition-colors"
+                          className="flex items-center gap-1.5 text-xs font-mono text-[#09090B] dark:text-[#F4F4F5] bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] px-2.5 py-1 rounded-md hover:border-[#FF4500] transition-colors"
                         >
-                          <img src={c.avatar_url} alt="" className="w-4 h-4 rounded-full object-cover" />
+                          <img src={c.avatar_url} alt="" className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg object-cover border border-[#E4E4E7] dark:border-[#27272A] shrink-0" />
                           <span>{c.name.split(' ')[0]}</span>
                         </Link>
                       ))}

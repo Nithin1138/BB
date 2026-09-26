@@ -40,11 +40,11 @@ export function ContestantRow({ contestant, rank, isLeader }: ContestantRowProps
           <img
             src={contestant.avatar_url}
             alt={contestant.name}
-            className="w-10 h-10 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] group-hover:border-[#FF4500] transition-colors"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] group-hover:border-[#FF4500] transition-colors shadow-xs"
           />
           {contestant.status === "nominated" && (
             <span
-              className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416]"
+              className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416]"
               title="Currently Nominated"
             />
           )}

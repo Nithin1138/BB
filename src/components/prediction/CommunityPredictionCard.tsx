@@ -74,7 +74,7 @@ export function CommunityPredictionCard({ stats }: CommunityPredictionCardProps)
           <img
             src={leadingRisk.contestant_avatar}
             alt={leadingRisk.contestant_name}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shadow-xs shrink-0"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-md shrink-0"
           />
           <div className="overflow-hidden">
             <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#FF4500] font-semibold uppercase tracking-wider">
@@ -137,7 +137,7 @@ export function CommunityPredictionCard({ stats }: CommunityPredictionCardProps)
               <img
                 src={stat.contestant_avatar}
                 alt=""
-                className="w-7 h-7 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shrink-0"
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
               />
               <div className="overflow-hidden">
                 <div className="text-xs font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">{stat.contestant_name}</div>

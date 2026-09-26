@@ -78,11 +78,11 @@ export function PostCard({ post, onPostUpdated }: PostCardProps) {
       {/* Post Top Row: Author Identity & Category Tag */}
       <div className="flex items-center justify-between gap-3 mb-2.5">
         <div className="flex items-center gap-2.5">
-          <Link href={`/u/${post.author_username}`}>
+          <Link href={`/u/${post.author_username}`} className="shrink-0">
             <img
               src={post.author_avatar}
               alt=""
-              className="w-8 h-8 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
             />
           </Link>
           <div>

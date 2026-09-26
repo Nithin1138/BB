@@ -197,7 +197,7 @@ export function ShareModal({ isOpen, onClose, config }: ShareModalProps) {
                       <img
                         src={config.contestant_avatar}
                         alt=""
-                        className="w-6 h-6 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                        className="w-10 h-10 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
                       />
                     )}
                     <span className="font-serif font-semibold text-xs">{config.contestant_name}</span>

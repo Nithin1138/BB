@@ -117,8 +117,8 @@ export default function AdminOverviewPage() {
           <div className="space-y-2">
             {INITIAL_CONTESTANTS.slice(0, 4).map(c => (
               <div key={c.id} className="p-2.5 bg-[#FAF9F6] dark:bg-[#1A1A1E] border border-[#E8E6DF] dark:border-[#24242A] rounded-xl flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <img src={c.avatar_url} alt="" className="w-6 h-6 rounded-full object-cover" />
+                <div className="flex items-center gap-2.5">
+                  <img src={c.avatar_url} alt="" className="w-10 h-10 rounded-xl object-cover border border-[#E8E6DF] dark:border-[#24242A] shrink-0" />
                   <span className="font-serif font-semibold text-[#121210] dark:text-[#F3F2EE]">{c.name}</span>
                 </div>
                 <span className={`font-mono text-[10px] font-bold uppercase px-2 py-0.5 rounded ${

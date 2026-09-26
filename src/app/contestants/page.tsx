@@ -119,19 +119,27 @@ export default function ContestantsPage() {
               <div>
                 {/* Top: Avatar & Status */}
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3.5">
-                    <img
-                      src={contestant.avatar_url}
-                      alt={contestant.name}
-                      className={`w-14 h-14 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] transition-all ${
-                        contestant.status === 'evicted' || contestant.status === 'walked'
-                          ? 'grayscale'
-                          : 'grayscale-[15%] group-hover:grayscale-0'
-                      }`}
-                    />
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <h2 className="text-lg font-serif font-normal text-[#09090B] dark:text-[#F4F4F5] leading-snug">
+                  <div className="flex items-start gap-4 min-w-0 flex-1">
+                    <div className="relative shrink-0">
+                      <img
+                        src={contestant.avatar_url}
+                        alt={contestant.name}
+                        className={`w-20 h-20 sm:w-22 sm:h-22 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shadow-sm transition-all ${
+                          contestant.status === 'evicted' || contestant.status === 'walked'
+                            ? 'grayscale opacity-75'
+                            : 'grayscale-0 group-hover:scale-105'
+                        }`}
+                      />
+                      {contestant.status === "nominated" && (
+                        <span
+                          className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416]"
+                          title="Currently Nominated"
+                        />
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <h2 className="text-lg sm:text-xl font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] leading-snug">
                           {contestant.name}
                         </h2>
                         {contestant.is_wildcard && (
@@ -141,17 +149,17 @@ export default function ContestantsPage() {
                         )}
                       </div>
                       {contestant.telugu_name && (
-                        <div className="text-xs text-[#71717A] dark:text-[#A1A1AA]">
+                        <div className="text-xs text-[#71717A] dark:text-[#A1A1AA] mt-0.5">
                           {contestant.telugu_name}
                         </div>
                       )}
-                      <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] mt-0.5">
+                      <div className="text-xs font-mono text-[#FF4500] mt-1">
                         {contestant.profession}
                       </div>
                     </div>
                   </div>
 
-                  <div>
+                  <div className="shrink-0">
                     {contestant.status === "nominated" ? (
                       <span className="text-[10px] font-mono font-bold text-[#FF4500] bg-[#FF4500]/10 px-2 py-0.5 rounded-sm uppercase tracking-wider flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF4500] animate-pulse" />

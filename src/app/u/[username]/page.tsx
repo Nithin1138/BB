@@ -45,7 +45,7 @@ export default function UserProfilePage() {
             <img
               src={profileUser.avatar_url}
               alt=""
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-4 border-[#F4F3EE] dark:border-[#24242A] shadow-xs shrink-0"
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover border-4 border-[#F4F3EE] dark:border-[#24242A] shadow-md shrink-0"
             />
             <div className="space-y-1">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
@@ -109,9 +109,9 @@ export default function UserProfilePage() {
               <Link
                 key={c.id}
                 href={`/contestants/${c.slug}`}
-                className="flex items-center gap-2 p-2 px-3 rounded-xl bg-[#FAF9F6] dark:bg-[#1A1A1E] border border-[#E8E6DF] dark:border-[#24242A] hover:border-[#E03137] transition-colors"
+                className="flex items-center gap-2.5 p-2 px-3.5 rounded-xl bg-[#FAF9F6] dark:bg-[#1A1A1E] border border-[#E8E6DF] dark:border-[#24242A] hover:border-[#E03137] transition-colors"
               >
-                <img src={c.avatar_url} alt="" className="w-6 h-6 rounded-full object-cover" />
+                <img src={c.avatar_url} alt="" className="w-10 h-10 rounded-xl object-cover border border-[#E8E6DF] dark:border-[#24242A] shrink-0" />
                 <span className="text-xs font-serif font-semibold text-[#121210] dark:text-[#F3F2EE]">{c.name}</span>
                 <span className="font-mono text-[10px] text-[#E03137] dark:text-[#FF453A] font-bold tabular-nums">{c.pulse_score} Pulse</span>
               </Link>

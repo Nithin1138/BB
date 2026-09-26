@@ -90,13 +90,17 @@ export default function ContestantProfilePage() {
               <img
                 src={contestant.avatar_url}
                 alt={contestant.name}
-                className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shadow-sm"
+                className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-3xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-md"
               />
               {contestant.status === "nominated" && (
-                <span className="absolute bottom-0 right-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416]" title="Nominated" />
+                <span className="absolute -bottom-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416] flex items-center justify-center text-[11px] font-bold text-white shadow-xs" title="Nominated">
+                  !
+                </span>
               )}
               {contestant.status === "captain" && (
-                <span className="absolute bottom-0 right-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#F59E0B] border-2 border-white dark:border-[#141416]" title="Captain" />
+                <span className="absolute -bottom-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#F59E0B] border-2 border-white dark:border-[#141416] flex items-center justify-center text-[11px] font-bold text-white shadow-xs" title="Captain">
+                  ★
+                </span>
               )}
             </div>
 

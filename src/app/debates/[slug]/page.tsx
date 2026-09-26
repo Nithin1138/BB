@@ -235,8 +235,8 @@ export default function DebatePage() {
           {debate.responses.map(r => (
             <div key={r.id} className="p-4 bg-[#FAF9F6] dark:bg-[#1A1A1E] rounded-2xl border border-[#E8E6DF] dark:border-[#24242A] space-y-1.5">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <img src={r.user_avatar} alt="" className="w-6 h-6 rounded-full object-cover border border-[#E8E6DF] dark:border-[#24242A]" />
+                <div className="flex items-center gap-2.5">
+                  <img src={r.user_avatar} alt="" className="w-10 h-10 rounded-xl object-cover border-2 border-[#E8E6DF] dark:border-[#24242A] shadow-2xs shrink-0" />
                   <Link href={`/u/${r.username}`} className="text-xs font-mono font-bold text-[#121210] dark:text-[#F3F2EE] hover:text-[#E03137] dark:hover:text-[#FF453A]">
                     @{r.username}
                   </Link>

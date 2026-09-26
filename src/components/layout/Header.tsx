@@ -234,7 +234,7 @@ export function Header({ onOpenSearch, onOpenMobileMenu }: HeaderProps) {
               <img
                 src={user.avatar_url}
                 alt={user.display_name}
-                className="w-7.5 h-7.5 rounded-full border border-[#E4E4E7] dark:border-[#232328] object-cover"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border-2 border-[#E4E4E7] dark:border-[#27272A] object-cover shadow-xs group-hover:border-[#FF4500] transition-colors"
               />
             </Link>
           ) : (

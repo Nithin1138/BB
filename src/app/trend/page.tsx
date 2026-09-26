@@ -66,14 +66,14 @@ export default function TrendPage() {
                 href={`/contestants/${c.slug}`}
                 className="flex items-center justify-between py-3 rounded-md hover:bg-[#F4F4F5] dark:hover:bg-[#1A1A1E] px-2 transition-all group"
               >
-                <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
+                <div className="flex items-center gap-3.5 min-w-0 flex-1 mr-2">
                   <span className="w-5 text-center text-xs font-mono font-semibold text-[#71717A] dark:text-[#A1A1AA] shrink-0">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
-                  <img src={c.avatar_url} alt="" className="w-9 h-9 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shrink-0" />
+                  <img src={c.avatar_url} alt="" className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0" />
                   <div className="min-w-0 truncate">
-                    <div className="text-sm font-serif font-normal text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] dark:group-hover:text-[#FF4500] truncate">{c.name}</div>
-                    <div className="text-[10px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">{c.profession}</div>
+                    <div className="text-base font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] dark:group-hover:text-[#FF4500] truncate">{c.name}</div>
+                    <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">{c.profession}</div>
                   </div>
                 </div>
 
@@ -108,14 +108,14 @@ export default function TrendPage() {
                 href={`/contestants/${c.slug}`}
                 className="flex items-center justify-between py-3 rounded-md hover:bg-[#F4F4F5] dark:hover:bg-[#1A1A1E] px-2 transition-all group"
               >
-                <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
+                <div className="flex items-center gap-3.5 min-w-0 flex-1 mr-2">
                   <span className="w-5 text-center text-xs font-mono font-semibold text-[#71717A] dark:text-[#A1A1AA] shrink-0">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
-                  <img src={c.avatar_url} alt="" className="w-9 h-9 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shrink-0" />
+                  <img src={c.avatar_url} alt="" className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0" />
                   <div className="min-w-0 truncate">
-                    <div className="text-sm font-serif font-normal text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] dark:group-hover:text-[#FF4500] truncate">{c.name}</div>
-                    <div className="text-[10px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">{c.profession}</div>
+                    <div className="text-base font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] dark:group-hover:text-[#FF4500] truncate">{c.name}</div>
+                    <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">{c.profession}</div>
                   </div>
                 </div>
 
@@ -152,10 +152,10 @@ export default function TrendPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {mostDiscussed.slice(0, 3).map((c) => (
             <div key={c.id} className="p-4 bg-[#F4F4F5] dark:bg-[#1A1A1E] rounded-md border border-[#E4E4E7] dark:border-[#232328] flex flex-col justify-between space-y-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <img src={c.avatar_url} alt="" className="w-10 h-10 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] shrink-0" />
+              <div className="flex items-center gap-3.5 min-w-0">
+                <img src={c.avatar_url} alt="" className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0" />
                 <div className="min-w-0">
-                  <h3 className="text-sm font-serif font-normal text-[#09090B] dark:text-[#F4F4F5] truncate">{c.name}</h3>
+                  <h3 className="text-base font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">{c.name}</h3>
                   <div className="text-xs font-mono text-[#FF4500] truncate tabular-nums">{c.discussion_count.toLocaleString()} threads</div>
                 </div>
               </div>
@@ -220,9 +220,9 @@ export default function TrendPage() {
         <div className="space-y-3">
           {INITIAL_CONTESTANTS.slice(0, 4).map((c, i) => (
             <div key={c.id} className="p-3 bg-[#F4F4F5] dark:bg-[#1A1A1E] rounded-md border border-[#E4E4E7] dark:border-[#232328] flex items-center justify-between gap-3 sm:gap-4">
-              <div className="flex items-center gap-2.5 sm:gap-3 w-32 sm:w-44 shrink-0 min-w-0">
-                <img src={c.avatar_url} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
-                <span className="text-xs font-serif font-normal text-[#09090B] dark:text-[#F4F4F5] truncate">{c.name}</span>
+              <div className="flex items-center gap-3 sm:gap-3.5 w-40 sm:w-52 shrink-0 min-w-0">
+                <img src={c.avatar_url} alt="" className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0" />
+                <span className="text-xs sm:text-sm font-serif font-medium text-[#09090B] dark:text-[#F4F4F5] truncate">{c.name}</span>
               </div>
 
               <div className="flex-1 min-w-[60px]">

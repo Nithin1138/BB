@@ -160,7 +160,7 @@ export default function HomePage() {
                 <img
                   src={INITIAL_CONTESTANTS[0].avatar_url}
                   alt={INITIAL_CONTESTANTS[0].name}
-                  className="w-16 h-16 rounded-md object-cover border border-[#E4E4E7] dark:border-[#232328] shrink-0"
+                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shadow-md shrink-0"
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline gap-2">
@@ -316,8 +316,8 @@ export default function HomePage() {
                   href={`/contestants/${c.slug}`}
                   className="flex items-center justify-between p-2 rounded-md hover:bg-[#F4F4F5] dark:hover:bg-[#1B1B1F] transition-colors group"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <img src={c.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]" />
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img src={c.avatar_url} alt="" className="w-12 h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shrink-0 shadow-2xs" />
                     <div className="min-w-0 truncate">
                       <div className="text-xs font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] truncate">
                         {c.name}
@@ -352,8 +352,8 @@ export default function HomePage() {
                   href={`/contestants/${c.slug}`}
                   className="flex items-center justify-between p-2 rounded-md hover:bg-[#F4F4F5] dark:hover:bg-[#1B1B1F] transition-colors group"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <img src={c.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]" />
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img src={c.avatar_url} alt="" className="w-12 h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shrink-0 shadow-2xs" />
                     <div className="min-w-0 truncate">
                       <div className="text-xs font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] truncate">
                         {c.name}
@@ -388,8 +388,8 @@ export default function HomePage() {
                   href={`/contestants/${c.slug}`}
                   className="flex items-center justify-between p-2 rounded-md hover:bg-[#F4F4F5] dark:hover:bg-[#1B1B1F] transition-colors group"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <img src={c.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]" />
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img src={c.avatar_url} alt="" className="w-12 h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shrink-0 shadow-2xs" />
                     <div className="min-w-0 truncate">
                       <div className="text-xs font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] truncate">
                         {c.name}

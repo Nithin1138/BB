@@ -125,7 +125,7 @@ export default function DiscussPage() {
                   : "bg-white dark:bg-[#141416] border-[#E4E4E7] dark:border-[#232328] text-[#71717A] dark:text-[#A1A1AA] hover:text-[#09090B] dark:hover:text-white hover:bg-[#F4F4F5] dark:hover:bg-[#18181C]"
               }`}
             >
-              <img src={c.avatar_url} alt="" className="w-4 h-4 rounded-full object-cover" />
+              <img src={c.avatar_url} alt="" className="w-6 h-6 rounded-lg object-cover border border-current/20 shrink-0" />
               <span>{c.name}</span>
             </button>
           ))}

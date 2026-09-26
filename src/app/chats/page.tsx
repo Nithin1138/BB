@@ -222,7 +222,7 @@ export default function ChatsPage() {
                   <img
                     src={msg.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"}
                     alt={msg.display_name || "User"}
-                    className="w-8 h-8 rounded-full object-cover shrink-0 border border-[#E4E4E7] dark:border-[#232328]"
+                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover shrink-0 border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs"
                   />
                   <div className="flex-1 space-y-1">
                     <div className="flex items-baseline gap-2">

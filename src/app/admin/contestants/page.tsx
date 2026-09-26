@@ -74,8 +74,8 @@ export default function AdminContestantsPage() {
               {contestants.map((c) => (
                 <tr key={c.id} className="hover:bg-[#FAF9F6] dark:hover:bg-[#18181C] transition-colors">
                   <td className="py-3 px-4">
-                    <div className="flex items-center gap-2.5">
-                      <img src={c.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover border border-[#E8E6DF] dark:border-[#24242A]" />
+                    <div className="flex items-center gap-3">
+                      <img src={c.avatar_url} alt="" className="w-12 h-12 rounded-xl object-cover border-2 border-[#E8E6DF] dark:border-[#24242A] shadow-2xs shrink-0" />
                       <span className="font-serif font-semibold text-[#121210] dark:text-[#F3F2EE]">{c.name}</span>
                     </div>
                   </td>

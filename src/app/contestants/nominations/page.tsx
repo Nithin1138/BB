@@ -86,18 +86,18 @@ export default function NominationsLedgerPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Charan Mahadev - Evicted Day 4 / Re-entered Day 11 */}
-          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-lg p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3">
-            <div className="flex items-center gap-3">
+          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs">
+            <div className="flex items-center gap-3.5">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80"
+                src="https://b374dd683233.blob.upstash.io/CHARAN.jpg"
                 alt="Charan Mahadev"
-                className="w-12 h-12 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0"
               />
-              <div>
-                <div className="text-xs font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5]">
+              <div className="min-w-0">
+                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
                   Charan Mahadev
                 </div>
-                <div className="text-[10px] font-mono text-[#71717A] dark:text-[#A1A1AA]">
+                <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
                   Radio Jockey (Commoner)
                 </div>
               </div>
@@ -128,18 +128,18 @@ export default function NominationsLedgerPage() {
           </div>
 
           {/* Chaitra Rai - Evicted Day 5 */}
-          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-lg p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3">
-            <div className="flex items-center gap-3">
+          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs">
+            <div className="flex items-center gap-3.5">
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=320&q=80"
+                src="https://b374dd683233.blob.upstash.io/CHAITRA%20RAI.jpg"
                 alt="Chaitra Rai"
-                className="w-12 h-12 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] grayscale"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] grayscale shadow-xs shrink-0"
               />
-              <div>
-                <div className="text-xs font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5]">
+              <div className="min-w-0">
+                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
                   Chaitra Rai
                 </div>
-                <div className="text-[10px] font-mono text-[#71717A] dark:text-[#A1A1AA]">
+                <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
                   Television Actress
                 </div>
               </div>
@@ -170,18 +170,18 @@ export default function NominationsLedgerPage() {
           </div>
 
           {/* Krishnudu - Evicted Day 14 */}
-          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-lg p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3">
-            <div className="flex items-center gap-3">
+          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs">
+            <div className="flex items-center gap-3.5">
               <img
-                src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=320&q=80"
+                src="https://b374dd683233.blob.upstash.io/KRISHNUDU.jpg"
                 alt="Krishnudu"
-                className="w-12 h-12 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328] grayscale"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] grayscale shadow-xs shrink-0"
               />
-              <div>
-                <div className="text-xs font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5]">
+              <div className="min-w-0">
+                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
                   Krishnudu
                 </div>
-                <div className="text-[10px] font-mono text-[#71717A] dark:text-[#A1A1AA]">
+                <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
                   Film Actor
                 </div>
               </div>
@@ -212,18 +212,18 @@ export default function NominationsLedgerPage() {
           </div>
 
           {/* Mithilesh Reddy - Walked Day 20 with ₹15 Lakhs */}
-          <div className="border border-[#FF4500]/30 dark:border-[#FF4500]/40 rounded-lg p-4 bg-[#FF4500]/5 dark:bg-[#FF4500]/10 flex flex-col justify-between space-y-3">
-            <div className="flex items-center gap-3">
+          <div className="border border-[#FF4500]/30 dark:border-[#FF4500]/40 rounded-xl p-4 bg-[#FF4500]/5 dark:bg-[#FF4500]/10 flex flex-col justify-between space-y-3 shadow-2xs">
+            <div className="flex items-center gap-3.5">
               <img
-                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=320&q=80"
+                src="https://b374dd683233.blob.upstash.io/MYDHILI.jpg"
                 alt="Mithilesh Reddy"
-                className="w-12 h-12 rounded-full object-cover border border-[#FF4500]/40"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#FF4500]/50 shadow-xs shrink-0"
               />
-              <div>
-                <div className="text-xs font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5]">
+              <div className="min-w-0">
+                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
                   Mithilesh Reddy
                 </div>
-                <div className="text-[10px] font-mono text-[#FF4500] font-semibold">
+                <div className="text-[11px] font-mono text-[#FF4500] font-semibold truncate">
                   Wildcard (Day 19)
                 </div>
               </div>
@@ -353,14 +353,14 @@ export default function NominationsLedgerPage() {
                     key={c.id}
                     className="hover:bg-[#F4F4F5]/50 dark:hover:bg-[#1A1A1E]/50 transition-colors"
                   >
-                    <td className="py-3 px-4 font-sans font-semibold text-[#09090B] dark:text-[#F4F4F5] whitespace-nowrap">
-                      <div className="flex items-center gap-2.5">
+                    <td className="py-3.5 px-4 font-sans font-semibold text-[#09090B] dark:text-[#F4F4F5] whitespace-nowrap">
+                      <div className="flex items-center gap-3">
                         <img
                           src={c.avatar_url}
                           alt={c.name}
-                          className="w-7 h-7 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                          className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
                         />
-                        <span>{c.name}</span>
+                        <span className="text-sm font-serif font-bold">{c.name}</span>
                       </div>
                     </td>
                     <td className="py-3 px-4 whitespace-nowrap">
@@ -525,14 +525,14 @@ export default function NominationsLedgerPage() {
         {/* Selected Contestant Dossier Card */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
           <div className="md:col-span-4 p-5 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-lg space-y-4">
-            <div className="flex items-center gap-3.5">
+            <div className="flex items-center gap-4">
               <img
                 src={inspectedContestant.avatar_url}
                 alt={inspectedContestant.name}
-                className="w-16 h-16 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-md shrink-0"
               />
-              <div>
-                <h3 className="text-base font-serif font-bold text-[#09090B] dark:text-[#F4F4F5]">
+              <div className="min-w-0">
+                <h3 className="text-lg font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">
                   {inspectedContestant.name}
                 </h3>
                 {inspectedContestant.telugu_name && (

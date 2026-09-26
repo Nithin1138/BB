@@ -77,7 +77,7 @@ export default function PredictionLeaderboardPage() {
                       <img
                         src={entry.avatar_url}
                         alt=""
-                        className="w-7 h-7 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                        className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
                       />
                       <span className="font-mono text-xs">@{entry.username}</span>
                     </Link>

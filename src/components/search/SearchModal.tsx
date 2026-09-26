@@ -201,7 +201,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           <img
                             src={c.avatar_url}
                             alt={c.name}
-                            className="w-8 h-8 rounded-full object-cover border border-[#E4E4E7] dark:border-[#232328]"
+                            className="w-12 h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
                           />
                           <div>
                             <div className="font-serif font-normal text-xs sm:text-sm text-[#09090B] dark:text-[#F4F4F5]">
