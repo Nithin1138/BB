@@ -144,10 +144,40 @@ export default function ChatsPage() {
         </div>
       </div>
 
+      {/* Mobile Horizontal Channel Scroll Bar */}
+      <div className="lg:hidden">
+        <div className="text-[10px] font-mono uppercase tracking-widest text-[#71717A] mb-2 font-bold flex items-center justify-between">
+          <span>CHANNELS ({rooms.length})</span>
+          <span className="text-[9px] text-[#FF4500]">TAP TO SWITCH</span>
+        </div>
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          {rooms.map(room => (
+            <button
+              key={room.id}
+              onClick={() => setActiveRoomId(room.id)}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-mono whitespace-nowrap shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeRoomId === room.id
+                  ? "bg-[#09090B] text-white dark:bg-[#F4F4F5] dark:text-[#09090B] border-transparent font-bold shadow-xs"
+                  : "bg-white dark:bg-[#141416] border-[#E4E4E7] dark:border-[#232328] text-[#71717A] dark:text-[#A1A1AA] hover:text-[#09090B] dark:hover:text-[#F4F4F5]"
+              }`}
+            >
+              <span>#{room.name}</span>
+              {room.member_count && (
+                <span className={`text-[10px] px-1 py-0.2 rounded ${
+                  activeRoomId === room.id ? "bg-white/20 dark:bg-black/10" : "bg-[#F4F4F5] dark:bg-[#1B1B1F]"
+                }`}>
+                  {room.member_count}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Main Chat Interface */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left: Chat Rooms Sidebar (4 cols) */}
-        <div className="lg:col-span-4 bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 shadow-xs space-y-3">
+        {/* Left: Chat Rooms Sidebar (4 cols - Desktop Only) */}
+        <div className="hidden lg:block lg:col-span-4 bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-3 border-b border-[#E4E4E7] dark:border-[#232328]">
             <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#09090B] dark:text-[#F4F4F5]">
               Active Channels
@@ -195,21 +225,21 @@ export default function ChatsPage() {
         </div>
 
         {/* Right: Message Stream & Input (8 cols) */}
-        <div className="lg:col-span-8 bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl flex flex-col h-[600px] shadow-xs overflow-hidden">
+        <div className="lg:col-span-8 bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl flex flex-col h-[520px] sm:h-[600px] shadow-xs overflow-hidden">
           {/* Channel Header */}
-          <div className="p-4 border-b border-[#E4E4E7] dark:border-[#232328] flex items-center justify-between bg-[#F4F4F5]/50 dark:bg-[#1A1A1E]/50">
-            <div>
+          <div className="p-3.5 sm:p-4 border-b border-[#E4E4E7] dark:border-[#232328] flex items-center justify-between bg-[#F4F4F5]/50 dark:bg-[#1A1A1E]/50">
+            <div className="min-w-0 flex-1 mr-2">
               <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-base text-[#09090B] dark:text-[#F4F4F5]">
+                <span className="font-serif font-bold text-base text-[#09090B] dark:text-[#F4F4F5] truncate">
                   #{activeRoom?.name}
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
               </div>
               <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] mt-0.5 line-clamp-1">
                 {activeRoom?.description}
               </p>
             </div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[#71717A] dark:text-[#A1A1AA] hidden sm:inline">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-[#71717A] dark:text-[#A1A1AA] hidden sm:inline shrink-0">
               Messages Persisted
             </span>
           </div>
@@ -222,9 +252,9 @@ export default function ChatsPage() {
                   <img
                     src={msg.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"}
                     alt={msg.display_name || "User"}
-                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover shrink-0 border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover shrink-0 border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs"
                   />
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-baseline gap-2">
                       <span className="text-xs font-semibold text-[#09090B] dark:text-[#F4F4F5]">
                         {msg.display_name || msg.username || "Verified Fan"}
@@ -259,7 +289,7 @@ export default function ChatsPage() {
                   placeholder={`Post message to #${activeRoom?.name}...`}
                   autoComplete="off"
                   enterKeyHint="send"
-                  className="flex-1 text-base sm:text-xs px-3.5 py-2.5 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-md outline-hidden text-[#09090B] dark:text-[#F4F4F5] focus:border-[#FF4500] dark:focus:border-[#FF4500] transition-colors"
+                  className="flex-1 min-w-0 text-base sm:text-xs px-3.5 py-2.5 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-md outline-hidden text-[#09090B] dark:text-[#F4F4F5] focus:border-[#FF4500] dark:focus:border-[#FF4500] transition-colors"
                 />
                 <button
                   type="submit"

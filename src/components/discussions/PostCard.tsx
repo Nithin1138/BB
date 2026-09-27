@@ -74,88 +74,90 @@ export function PostCard({ post, onPostUpdated }: PostCardProps) {
   if (blocked) return null;
 
   return (
-    <article className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] hover:border-[#09090B]/30 dark:hover:border-[#F4F4F5]/30 rounded-xl p-4 sm:p-5 shadow-2xs transition-all duration-150 relative">
-      {/* Post Top Row: Author Identity & Category Tag */}
-      <div className="flex items-center justify-between gap-3 mb-2.5">
-        <div className="flex items-center gap-2.5">
-          <Link href={`/u/${post.author_username}`} className="shrink-0">
-            <img
-              src={post.author_avatar}
-              alt=""
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
-            />
-          </Link>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <Link
-                href={`/u/${post.author_username}`}
-                className="font-mono text-xs font-bold text-[#09090B] dark:text-[#F4F4F5] hover:text-[#FF4500] transition-colors"
-              >
-                @{post.author_username}
-              </Link>
-              <span className="text-[10px] text-[#71717A]">•</span>
-              <span className="font-mono text-[10px] text-[#71717A]">{post.created_at}</span>
+    <article className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] hover:border-[#09090B]/30 dark:hover:border-[#F4F4F5]/30 rounded-xl p-4 sm:p-5 shadow-2xs transition-all duration-150 relative flex flex-col justify-between h-full">
+      <div className="space-y-3">
+        {/* Post Top Row: Author Identity & Category Tag */}
+        <div className="flex items-center justify-between gap-2.5">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <Link href={`/u/${post.author_username}`} className="shrink-0">
+              <img
+                src={post.author_avatar}
+                alt=""
+                className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
+              />
+            </Link>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5 truncate">
+                <Link
+                  href={`/u/${post.author_username}`}
+                  className="font-mono text-xs font-bold text-[#09090B] dark:text-[#F4F4F5] hover:text-[#FF4500] transition-colors truncate"
+                >
+                  @{post.author_username}
+                </Link>
+                <span className="text-[10px] text-[#71717A] shrink-0">•</span>
+                <span className="font-mono text-[10px] text-[#71717A] shrink-0">{post.created_at}</span>
+              </div>
+              {post.contestant_name && (
+                <div className="text-[10px] text-[#71717A] truncate">
+                  Regarding <strong className="text-[#09090B] dark:text-[#F4F4F5] font-serif">{post.contestant_name}</strong>
+                </div>
+              )}
             </div>
-            {post.contestant_name && (
-              <div className="text-[10px] text-[#71717A]">
-                Regarding <strong className="text-[#09090B] dark:text-[#F4F4F5] font-serif">{post.contestant_name}</strong>
-              </div>
-            )}
+          </div>
+
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <span className="font-mono text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm bg-[#F4F4F5] dark:bg-[#1B1B1F] text-[#71717A] border border-[#E4E4E7] dark:border-[#232328]">
+              {post.category}
+            </span>
+
+            <div className="relative">
+              <button
+                onClick={() => setShowMenu(!showMenu)}
+                className="p-1 text-[#71717A] hover:text-[#09090B] dark:hover:text-[#F4F4F5] rounded hover:bg-[#F4F4F5] dark:hover:bg-[#1B1B1F] transition-colors cursor-pointer"
+                aria-label="More options"
+              >
+                <MoreHorizontal className="w-4 h-4" />
+              </button>
+
+              {showMenu && (
+                <div className="absolute right-0 mt-1 w-44 bg-white dark:bg-[#1B1B1F] border border-[#E4E4E7] dark:border-[#232328] rounded-xl shadow-lg p-1 z-30 text-xs animate-in fade-in duration-100">
+                  <button
+                    onClick={() => { setIsReportOpen(true); setShowMenu(false); }}
+                    className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FF4500]/10 text-[#FF4500] flex items-center gap-2 cursor-pointer font-medium"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5" />
+                    <span>Report Post</span>
+                  </button>
+                  <button
+                    onClick={handleBlock}
+                    className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#F4F4F5] dark:hover:bg-[#232328] text-[#71717A] flex items-center gap-2 cursor-pointer"
+                  >
+                    <UserX className="w-3.5 h-3.5" />
+                    <span>Block @{post.author_username}</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm bg-[#F4F4F5] dark:bg-[#1B1B1F] text-[#71717A] border border-[#E4E4E7] dark:border-[#232328]">
-            {post.category}
-          </span>
+        {/* Title & Body */}
+        <Link href={`/discuss/${post.id}`} className="block group">
+          <h3 className="font-serif italic font-bold text-base sm:text-lg text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] transition-colors leading-snug">
+            {post.title}
+          </h3>
+          <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] leading-relaxed mt-1.5 line-clamp-3">
+            {post.body}
+          </p>
+        </Link>
 
-          <div className="relative">
-            <button
-              onClick={() => setShowMenu(!showMenu)}
-              className="p-1 text-[#71717A] hover:text-[#09090B] dark:hover:text-[#F4F4F5] rounded hover:bg-[#F4F4F5] dark:hover:bg-[#1B1B1F] transition-colors cursor-pointer"
-              aria-label="More options"
-            >
-              <MoreHorizontal className="w-4 h-4" />
-            </button>
-
-            {showMenu && (
-              <div className="absolute right-0 mt-1 w-44 bg-white dark:bg-[#1B1B1F] border border-[#E4E4E7] dark:border-[#232328] rounded-xl shadow-lg p-1 z-30 text-xs animate-in fade-in duration-100">
-                <button
-                  onClick={() => { setIsReportOpen(true); setShowMenu(false); }}
-                  className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FF4500]/10 text-[#FF4500] flex items-center gap-2 cursor-pointer font-medium"
-                >
-                  <ShieldAlert className="w-3.5 h-3.5" />
-                  <span>Report Post</span>
-                </button>
-                <button
-                  onClick={handleBlock}
-                  className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#F4F4F5] dark:hover:bg-[#232328] text-[#71717A] flex items-center gap-2 cursor-pointer"
-                >
-                  <UserX className="w-3.5 h-3.5" />
-                  <span>Block @{post.author_username}</span>
-                </button>
-              </div>
-            )}
+        {/* Attached image if meme / media */}
+        {post.image_url && (
+          <div className="mt-3 rounded-lg overflow-hidden border border-[#E4E4E7] dark:border-[#232328] max-h-72">
+            <img src={post.image_url} alt="" className="w-full h-full object-cover" />
           </div>
-        </div>
+        )}
       </div>
-
-      {/* Title & Body */}
-      <Link href={`/discuss/${post.id}`} className="block group">
-        <h3 className="font-serif italic font-bold text-base sm:text-lg text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] transition-colors leading-snug">
-          {post.title}
-        </h3>
-        <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] leading-relaxed mt-1.5 line-clamp-3">
-          {post.body}
-        </p>
-      </Link>
-
-      {/* Attached image if meme / media */}
-      {post.image_url && (
-        <div className="mt-3 rounded-lg overflow-hidden border border-[#E4E4E7] dark:border-[#232328] max-h-72">
-          <img src={post.image_url} alt="" className="w-full h-full object-cover" />
-        </div>
-      )}
 
       {/* Bottom Bar: Agree / Disagree / Comments / Share */}
       <div className="flex items-center justify-between pt-3 sm:pt-4 mt-3 border-t border-[#E4E4E7] dark:border-[#232328] text-xs gap-1.5">

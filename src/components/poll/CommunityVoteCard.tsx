@@ -149,16 +149,18 @@ export function CommunityVoteCard({ initialPoll = INITIAL_POLL, onVoted }: Commu
                 />
               )}
 
-              <div className="relative z-10 flex items-center justify-between">
-                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <div className="relative z-10 flex items-center justify-between gap-3 w-full">
+                <div className="flex items-center gap-3 sm:gap-3.5 min-w-0 flex-1">
                   <img
                     src={option.contestant_avatar}
                     alt={option.contestant_name}
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shadow-xs shrink-0"
+                    className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0"
                   />
-                  <div className="min-w-0">
-                    <div className="text-base sm:text-lg font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] flex items-center gap-2 flex-wrap">
-                      <span>{option.contestant_name}</span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-sm sm:text-base font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">
+                        {option.contestant_name}
+                      </span>
                       {isVotedOption && (
                         <span className="font-mono text-[9px] uppercase tracking-wider font-bold text-[#FF4500] bg-[#FF4500]/15 px-1.5 py-0.5 rounded shrink-0">
                           Your Ballot
@@ -166,21 +168,21 @@ export function CommunityVoteCard({ initialPoll = INITIAL_POLL, onVoted }: Commu
                       )}
                     </div>
                     {hasVoted && (
-                      <div className="font-mono text-xs text-[#71717A] mt-0.5">
+                      <div className="font-mono text-[11px] sm:text-xs text-[#71717A] mt-0.5">
                         {option.vote_count.toLocaleString()} votes
                       </div>
                     )}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-end gap-2 shrink-0">
                   {hasVoted ? (
-                    <span className="text-sm font-bold font-mono tabular-nums text-[#09090B] dark:text-[#F4F4F5]">
+                    <span className="text-sm sm:text-base font-bold font-mono tabular-nums text-[#09090B] dark:text-[#F4F4F5]">
                       {option.percentage}%
                     </span>
                   ) : (
                     <div
-                      className={`w-4.5 h-4.5 rounded-full border flex items-center justify-center transition-colors ${
+                      className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
                         isSelected
                           ? "border-[#FF4500] bg-[#FF4500] text-white"
                           : "border-[#E4E4E7] dark:border-[#32323A] bg-white dark:bg-[#1B1B1F]"

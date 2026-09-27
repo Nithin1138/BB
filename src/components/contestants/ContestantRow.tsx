@@ -40,7 +40,7 @@ export function ContestantRow({ contestant, rank, isLeader }: ContestantRowProps
           <img
             src={contestant.avatar_url}
             alt={contestant.name}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] group-hover:border-[#FF4500] transition-colors shadow-xs"
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] group-hover:border-[#FF4500] transition-colors shadow-xs"
           />
           {contestant.status === "nominated" && (
             <span
@@ -57,28 +57,28 @@ export function ContestantRow({ contestant, rank, isLeader }: ContestantRowProps
         </div>
 
         <div className="overflow-hidden min-w-0 flex-1">
-          <div className="flex items-baseline gap-1.5 sm:gap-2">
-            <span className="font-serif font-bold text-xs sm:text-sm text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] transition-colors truncate">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="font-serif font-bold text-sm sm:text-base text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#FF4500] transition-colors truncate">
               {contestant.name}
             </span>
             {contestant.telugu_name && (
-              <span className="text-[11px] text-[#71717A] hidden xs:inline truncate font-medium">
+              <span className="text-[11px] text-[#71717A] hidden sm:inline truncate font-medium">
                 ({contestant.telugu_name})
               </span>
             )}
             {isLeader && (
               <span className="font-mono text-[9px] uppercase tracking-wider font-bold text-[#FF4500] bg-[#FF4500]/10 px-1.5 py-0.5 rounded-sm shrink-0">
-                Rank 01
+                #1
               </span>
             )}
             {contestant.status === "nominated" && !isLeader && (
-              <span className="font-mono text-[9px] font-medium text-[#FF4500] bg-[#FF4500]/10 px-1.5 py-0.5 rounded-sm shrink-0">
+              <span className="font-mono text-[9px] font-medium text-[#FF4500] bg-[#FF4500]/10 px-1.5 py-0.5 rounded-sm shrink-0 hidden xs:inline-block">
                 Nominated
               </span>
             )}
           </div>
           <div className="text-[11px] text-[#71717A] truncate mt-0.5">
-            {contestant.profession} • <span className="font-mono tabular-nums">{contestant.discussion_count.toLocaleString()}</span> posts
+            {contestant.profession}
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <div className="min-h-screen flex flex-col bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#09090B] dark:text-[#F4F4F5] selection:bg-[#FF4500]/20 selection:text-[#FF4500] transition-colors duration-200">
+        <div className="min-h-screen flex flex-col bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#09090B] dark:text-[#F4F4F5] selection:bg-[#FF4500]/20 selection:text-[#FF4500] transition-colors duration-200 overflow-x-hidden w-full max-w-full">
           {/* Global Header */}
           <Header
             onOpenSearch={() => setIsSearchOpen(true)}
@@ -25,7 +25,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           />
 
           {/* Main Content Area: Responsive container with padding-bottom for mobile bottom navigation */}
-          <main className="flex-1 w-full max-w-[1280px] mx-auto px-4 sm:px-6 py-5 sm:py-8 pb-24 md:pb-8 animate-page-enter">
+          <main className="flex-1 w-full max-w-[1280px] mx-auto px-3 sm:px-6 py-4 sm:py-8 pb-24 md:pb-8 animate-page-enter">
             {children}
           </main>
 

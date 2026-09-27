@@ -82,15 +82,15 @@ export default function ContestantProfilePage() {
       </div>
 
       {/* Editorial Profile Header */}
-      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-6 sm:p-8 md:p-10 shadow-xs relative overflow-hidden">
+      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 sm:p-8 md:p-10 shadow-xs relative overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
           {/* Avatar & Identity */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-7">
             <div className="relative shrink-0">
               <img
                 src={contestant.avatar_url}
                 alt={contestant.name}
-                className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-3xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-md"
+                className="w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-3xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-md"
               />
               {contestant.status === "nominated" && (
                 <span className="absolute -bottom-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416] flex items-center justify-center text-[11px] font-bold text-white shadow-xs" title="Nominated">

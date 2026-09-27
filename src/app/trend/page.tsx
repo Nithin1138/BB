@@ -149,24 +149,26 @@ export default function TrendPage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
           {mostDiscussed.slice(0, 3).map((c) => (
-            <div key={c.id} className="p-4 bg-[#F4F4F5] dark:bg-[#1A1A1E] rounded-md border border-[#E4E4E7] dark:border-[#232328] flex flex-col justify-between space-y-3">
-              <div className="flex items-center gap-3.5 min-w-0">
-                <img src={c.avatar_url} alt="" className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0" />
-                <div className="min-w-0">
-                  <h3 className="text-base font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">{c.name}</h3>
-                  <div className="text-xs font-mono text-[#FF4500] truncate tabular-nums">{c.discussion_count.toLocaleString()} threads</div>
+            <div key={c.id} className="p-4 bg-[#F4F4F5] dark:bg-[#1A1A1E] rounded-md border border-[#E4E4E7] dark:border-[#232328] flex flex-col justify-between space-y-3 h-full">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <img src={c.avatar_url} alt="" className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0" />
+                  <div className="min-w-0">
+                    <h3 className="text-base font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">{c.name}</h3>
+                    <div className="text-xs font-mono text-[#FF4500] truncate tabular-nums">{c.discussion_count.toLocaleString()} threads</div>
+                  </div>
                 </div>
-              </div>
 
-              <p className="text-xs italic font-serif text-[#71717A] dark:text-[#A1A1AA] line-clamp-2">
-                "{c.quote}"
-              </p>
+                <p className="text-xs italic font-serif text-[#71717A] dark:text-[#A1A1AA] line-clamp-2 min-h-[2rem]">
+                  "{c.quote}"
+                </p>
+              </div>
 
               <Link
                 href={`/contestants/${c.slug}`}
-                className="text-xs font-mono font-medium text-[#09090B] dark:text-[#F4F4F5] hover:text-[#FF4500] dark:hover:text-[#FF4500] flex items-center gap-1 active:scale-95 transition-all"
+                className="text-xs font-mono font-medium text-[#09090B] dark:text-[#F4F4F5] hover:text-[#FF4500] dark:hover:text-[#FF4500] flex items-center gap-1 active:scale-95 transition-all pt-2 border-t border-[#E4E4E7]/60 dark:border-[#232328]/60"
               >
                 <span>View Dossier & Story</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -177,7 +179,7 @@ export default function TrendPage() {
       </section>
 
       {/* Pulse History Timeline */}
-      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-6 sm:p-8 shadow-xs space-y-6">
+      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 sm:p-6 lg:p-8 shadow-xs space-y-6 max-w-full overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <span className="text-[10px] font-mono tracking-widest text-[#FF4500] uppercase font-bold">
@@ -188,7 +190,7 @@ export default function TrendPage() {
             </h2>
           </div>
 
-          <div className="flex items-center gap-1 bg-[#F4F4F5] dark:bg-[#1A1A1E] p-1 rounded-md text-xs font-mono overflow-x-auto no-scrollbar self-start sm:self-auto border border-[#E4E4E7] dark:border-[#232328]">
+          <div className="flex items-center gap-1 bg-[#F4F4F5] dark:bg-[#1A1A1E] p-1 rounded-md text-xs font-mono overflow-x-auto no-scrollbar self-start sm:self-auto border border-[#E4E4E7] dark:border-[#232328] max-w-full">
             <button
               onClick={() => setTimeframe("7d")}
               className={`px-3 py-1 rounded-sm text-[11px] cursor-pointer shrink-0 transition-colors uppercase tracking-wider ${
@@ -219,14 +221,14 @@ export default function TrendPage() {
         {/* Clean Editorial Timeline Chart Visualization */}
         <div className="space-y-3">
           {INITIAL_CONTESTANTS.slice(0, 4).map((c, i) => (
-            <div key={c.id} className="p-3 bg-[#F4F4F5] dark:bg-[#1A1A1E] rounded-md border border-[#E4E4E7] dark:border-[#232328] flex items-center justify-between gap-3 sm:gap-4">
-              <div className="flex items-center gap-3 sm:gap-3.5 w-40 sm:w-52 shrink-0 min-w-0">
-                <img src={c.avatar_url} alt="" className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0" />
+            <div key={c.id} className="p-3 bg-[#F4F4F5] dark:bg-[#1A1A1E] rounded-md border border-[#E4E4E7] dark:border-[#232328] flex items-center justify-between gap-2.5 sm:gap-4">
+              <div className="flex items-center gap-2.5 sm:gap-3.5 w-28 xs:w-36 sm:w-48 md:w-52 shrink-0 min-w-0">
+                <img src={c.avatar_url} alt="" className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0" />
                 <span className="text-xs sm:text-sm font-serif font-medium text-[#09090B] dark:text-[#F4F4F5] truncate">{c.name}</span>
               </div>
 
-              <div className="flex-1 min-w-[60px]">
-                <div className="h-1.5 w-full bg-[#E4E4E7] dark:bg-[#27272A] rounded-full overflow-hidden flex">
+              <div className="flex-1 min-w-[50px]">
+                <div className="h-1.5 w-full bg-[#E4E4E7] dark:border-[#232328] rounded-full overflow-hidden flex">
                   <div
                     className={`h-full rounded-full transition-all duration-700 ${
                       i === 0 ? "bg-[#FF4500]" : i === 1 ? "bg-[#10B981]" : i === 2 ? "bg-[#F59E0B]" : "bg-[#71717A]"
@@ -236,7 +238,7 @@ export default function TrendPage() {
                 </div>
               </div>
 
-              <div className="text-right w-16 sm:w-24 shrink-0">
+              <div className="text-right w-14 xs:w-16 sm:w-24 shrink-0">
                 <span className="text-xs font-mono font-bold text-[#09090B] dark:text-[#F4F4F5] block tabular-nums">{c.pulse_score}</span>
                 <span className={`block text-[10px] font-mono tabular-nums ${c.pulse_change >= 0 ? "text-[#10B981]" : "text-[#FF4500]"}`}>
                   {c.pulse_change >= 0 ? `+${c.pulse_change}%` : `${c.pulse_change}%`}

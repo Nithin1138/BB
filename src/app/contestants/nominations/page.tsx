@@ -69,7 +69,7 @@ export default function NominationsLedgerPage() {
       </div>
 
       {/* Section 1: Previous Weeks Eliminated & Exited Members */}
-      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-6 sm:p-8 shadow-xs space-y-6">
+      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 sm:p-6 lg:p-8 shadow-xs space-y-6 max-w-full overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#E4E4E7] dark:border-[#232328]">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF4500] font-bold">
@@ -84,43 +84,45 @@ export default function NominationsLedgerPage() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
           {/* Charan Mahadev - Evicted Day 4 / Re-entered Day 11 */}
-          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs">
-            <div className="flex items-center gap-3.5">
-              <img
-                src="https://b374dd683233.blob.upstash.io/CHARAN.jpg"
-                alt="Charan Mahadev"
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0"
-              />
-              <div className="min-w-0">
-                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
-                  Charan Mahadev
+          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs h-full">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3.5">
+                <img
+                  src="https://b374dd683233.blob.upstash.io/CHARAN.jpg"
+                  alt="Charan Mahadev"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
+                    Charan Mahadev
+                  </div>
+                  <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
+                    Radio Jockey (Commoner)
+                  </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
-                  Radio Jockey (Commoner)
+              </div>
+
+              <div className="space-y-1.5 text-xs font-mono">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
+                  <span className="text-[#10B981] font-bold">Re-entered Day 11</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Exit 1:</span>
+                  <span className="text-[#FF4500] font-semibold">Evicted Day 4 (9-4)</span>
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-1.5 text-xs font-mono">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
-                <span className="text-[#10B981] font-bold">Re-entered Day 11</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Exit 1:</span>
-                <span className="text-[#FF4500] font-semibold">Evicted Day 4 (9-4)</span>
-              </div>
+              <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
+                Evicted in surprise mid-week house vote by 9 housemates. Brought back on Day 11 by overwhelming public vote in Power of People twist.
+              </p>
             </div>
-
-            <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
-              Evicted in surprise mid-week house vote by 9 housemates. Brought back on Day 11 by overwhelming public vote in Power of People twist.
-            </p>
 
             <Link
               href="/contestants/charan-mahadev"
-              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-1"
+              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-2 border-t border-[#E4E4E7]/60 dark:border-[#232328]/60"
             >
               <span>View Dossier</span>
               <ArrowRight className="w-3 h-3" />
@@ -128,41 +130,43 @@ export default function NominationsLedgerPage() {
           </div>
 
           {/* Chaitra Rai - Evicted Day 5 */}
-          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs">
-            <div className="flex items-center gap-3.5">
-              <img
-                src="https://b374dd683233.blob.upstash.io/CHAITRA%20RAI.jpg"
-                alt="Chaitra Rai"
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] grayscale shadow-xs shrink-0"
-              />
-              <div className="min-w-0">
-                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
-                  Chaitra Rai
+          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs h-full">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3.5">
+                <img
+                  src="https://b374dd683233.blob.upstash.io/CHAITRA%20RAI.jpg"
+                  alt="Chaitra Rai"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] grayscale shadow-xs shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
+                    Chaitra Rai
+                  </div>
+                  <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
+                    Television Actress
+                  </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
-                  Television Actress
+              </div>
+
+              <div className="space-y-1.5 text-xs font-mono">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
+                  <span className="text-[#FF4500] font-bold">Evicted Day 5</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Vote Count:</span>
+                  <span className="font-semibold text-[#09090B] dark:text-[#F4F4F5]">3 votes against (3-1)</span>
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-1.5 text-xs font-mono">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
-                <span className="text-[#FF4500] font-bold">Evicted Day 5</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Vote Count:</span>
-                <span className="font-semibold text-[#09090B] dark:text-[#F4F4F5]">3 votes against (3-1)</span>
-              </div>
+              <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
+                Faced surprise 4-way internal vote on Day 5 alongside Aman, Sudheer, and Varshini. Voted out with 3 votes against her.
+              </p>
             </div>
-
-            <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
-              Faced surprise 4-way internal vote on Day 5 alongside Aman, Sudheer, and Varshini. Voted out with 3 votes against her.
-            </p>
 
             <Link
               href="/contestants/chaitra-rai"
-              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-1"
+              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-2 border-t border-[#E4E4E7]/60 dark:border-[#232328]/60"
             >
               <span>View Dossier</span>
               <ArrowRight className="w-3 h-3" />
@@ -170,41 +174,43 @@ export default function NominationsLedgerPage() {
           </div>
 
           {/* Krishnudu - Evicted Day 14 */}
-          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs">
-            <div className="flex items-center gap-3.5">
-              <img
-                src="https://b374dd683233.blob.upstash.io/KRISHNUDU.jpg"
-                alt="Krishnudu"
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] grayscale shadow-xs shrink-0"
-              />
-              <div className="min-w-0">
-                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
-                  Krishnudu
+          <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 flex flex-col justify-between space-y-3 shadow-2xs h-full">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3.5">
+                <img
+                  src="https://b374dd683233.blob.upstash.io/KRISHNUDU.jpg"
+                  alt="Krishnudu"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] grayscale shadow-xs shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
+                    Krishnudu
+                  </div>
+                  <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
+                    Film Actor
+                  </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#71717A] dark:text-[#A1A1AA] truncate">
-                  Film Actor
+              </div>
+
+              <div className="space-y-1.5 text-xs font-mono">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
+                  <span className="text-[#FF4500] font-bold">Evicted Day 14</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Lost Power:</span>
+                  <span className="font-semibold text-[#71717A] dark:text-[#A1A1AA]">Switch (Unused)</span>
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-1.5 text-xs font-mono">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
-                <span className="text-[#FF4500] font-bold">Evicted Day 14</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Lost Power:</span>
-                <span className="font-semibold text-[#71717A] dark:text-[#A1A1AA]">Switch (Unused)</span>
-              </div>
+              <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
+                Lost axe sprint to Debjani in Week 2 and faced an 11-way public vote. Received the fewest public votes on Day 14.
+              </p>
             </div>
-
-            <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
-              Lost axe sprint to Debjani in Week 2 and faced an 11-way public vote. Received the fewest public votes on Day 14.
-            </p>
 
             <Link
               href="/contestants/krishnudu"
-              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-1"
+              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-2 border-t border-[#E4E4E7]/60 dark:border-[#232328]/60"
             >
               <span>View Dossier</span>
               <ArrowRight className="w-3 h-3" />
@@ -212,44 +218,46 @@ export default function NominationsLedgerPage() {
           </div>
 
           {/* Mithilesh Reddy - Walked Day 20 with ₹15 Lakhs */}
-          <div className="border border-[#FF4500]/30 dark:border-[#FF4500]/40 rounded-xl p-4 bg-[#FF4500]/5 dark:bg-[#FF4500]/10 flex flex-col justify-between space-y-3 shadow-2xs">
-            <div className="flex items-center gap-3.5">
-              <img
-                src="https://b374dd683233.blob.upstash.io/MYDHILI.jpg"
-                alt="Mithilesh Reddy"
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#FF4500]/50 shadow-xs shrink-0"
-              />
-              <div className="min-w-0">
-                <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
-                  Mithilesh Reddy
+          <div className="border border-[#FF4500]/30 dark:border-[#FF4500]/40 rounded-xl p-4 bg-[#FF4500]/5 dark:bg-[#FF4500]/10 flex flex-col justify-between space-y-3 shadow-2xs h-full">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3.5">
+                <img
+                  src="https://b374dd683233.blob.upstash.io/MYDHILI.jpg"
+                  alt="Mithilesh Reddy"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#FF4500]/50 shadow-xs shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="text-sm font-serif font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate">
+                    Mithilesh Reddy
+                  </div>
+                  <div className="text-[11px] font-mono text-[#FF4500] font-semibold truncate">
+                    Wildcard (Day 19)
+                  </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#FF4500] font-semibold truncate">
-                  Wildcard (Day 19)
+              </div>
+
+              <div className="space-y-1.5 text-xs font-mono">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
+                  <span className="text-[#FF4500] font-bold flex items-center gap-1">
+                    <DollarSign className="w-3 h-3" />
+                    <span>Walked Day 20</span>
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#71717A] dark:text-[#A1A1AA]">Bounty:</span>
+                  <span className="font-bold text-[#09090B] dark:text-[#F4F4F5]">₹15 Lakhs Cash</span>
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-1.5 text-xs font-mono">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
-                <span className="text-[#FF4500] font-bold flex items-center gap-1">
-                  <DollarSign className="w-3 h-3" />
-                  <span>Walked Day 20</span>
-                </span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-[#71717A] dark:text-[#A1A1AA]">Bounty:</span>
-                <span className="font-bold text-[#09090B] dark:text-[#F4F4F5]">₹15 Lakhs Cash</span>
-              </div>
+              <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
+                Won the Day 19 tiebreaker task against Ramakrishna to enter the house, then accepted the ₹15L briefcase temptation on Day 20 and walked out!
+              </p>
             </div>
-
-            <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA] leading-relaxed pt-2 border-t border-[#E4E4E7] dark:border-[#232328]">
-              Won the Day 19 tiebreaker task against Ramakrishna to enter the house, then accepted the ₹15L briefcase temptation on Day 20 and walked out!
-            </p>
 
             <Link
               href="/contestants/mithilesh-reddy"
-              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-1"
+              className="text-[11px] font-mono text-[#FF4500] hover:underline flex items-center gap-1 pt-2 border-t border-[#FF4500]/20"
             >
               <span>View Dossier</span>
               <ArrowRight className="w-3 h-3" />
@@ -259,7 +267,7 @@ export default function NominationsLedgerPage() {
       </section>
 
       {/* Section 2: Week-by-Week Nominations & "Nominated By" Breakdown */}
-      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-6 sm:p-8 shadow-xs space-y-6">
+      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 sm:p-6 lg:p-8 shadow-xs space-y-6 max-w-full overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E4E4E7] dark:border-[#232328]">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF4500] font-bold">
@@ -271,12 +279,12 @@ export default function NominationsLedgerPage() {
           </div>
 
           {/* Week Selector Tabs */}
-          <div className="flex items-center gap-1 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-md p-1 font-mono text-xs overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-md p-1 font-mono text-xs overflow-x-auto no-scrollbar max-w-full">
             {[1, 2, 3, 4].map(w => (
               <button
                 key={w}
                 onClick={() => setSelectedWeek(w)}
-                className={`px-3 py-1.5 rounded-sm text-[10px] uppercase tracking-wider font-semibold transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-sm text-[10px] uppercase tracking-wider font-semibold transition-all cursor-pointer shrink-0 ${
                   selectedWeek === w
                     ? "bg-[#09090B] text-white dark:bg-[#F4F4F5] dark:text-[#09090B] shadow-2xs"
                     : "text-[#71717A] dark:text-[#A1A1AA] hover:text-[#09090B] dark:hover:text-[#F4F4F5]"
@@ -331,7 +339,7 @@ export default function NominationsLedgerPage() {
         </div>
 
         {/* Contestants Table for this Week */}
-        <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-lg overflow-x-auto">
+        <div className="border border-[#E4E4E7] dark:border-[#232328] rounded-lg overflow-x-auto w-full max-w-full">
           <table className="w-full text-left text-xs font-mono">
             <thead className="bg-[#F4F4F5] dark:bg-[#1A1A1E] border-b border-[#E4E4E7] dark:border-[#232328] text-[#71717A] dark:text-[#A1A1AA] text-[10px] uppercase tracking-wider">
               <tr>
@@ -437,7 +445,7 @@ export default function NominationsLedgerPage() {
       </section>
 
       {/* Section 3: The 10 Special Powers Grid */}
-      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-6 sm:p-8 shadow-xs space-y-6">
+      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 sm:p-6 lg:p-8 shadow-xs space-y-6 max-w-full overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#E4E4E7] dark:border-[#232328]">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF4500] font-bold">
@@ -457,36 +465,38 @@ export default function NominationsLedgerPage() {
           Revealing a power results in immediate revocation.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
           {BB10_SPECIAL_POWERS.map((sp, idx) => (
             <div
               key={idx}
-              className="p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 border border-[#E4E4E7] dark:border-[#232328] rounded-lg space-y-3"
+              className="p-4 bg-[#F4F4F5]/60 dark:bg-[#1A1A1E]/60 border border-[#E4E4E7] dark:border-[#232328] rounded-lg flex flex-col justify-between space-y-3 h-full"
             >
-              <div className="flex items-start justify-between gap-2">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-serif font-bold text-[#09090B] dark:text-[#F4F4F5]">
-                      {sp.power}
-                    </span>
-                    <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-xs font-semibold bg-[#E4E4E7] dark:bg-[#232328] text-[#71717A] dark:text-[#A1A1AA]">
-                      {sp.category}
-                    </span>
+              <div className="space-y-2">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="space-y-0.5 min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                      <span className="text-sm font-serif font-bold text-[#09090B] dark:text-[#F4F4F5]">
+                        {sp.power}
+                      </span>
+                      <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-xs font-semibold bg-[#E4E4E7] dark:bg-[#232328] text-[#71717A] dark:text-[#A1A1AA]">
+                        {sp.category}
+                      </span>
+                    </div>
+                    <div className="text-xs font-mono text-[#FF4500] truncate">
+                      Holder: <Link href={`/contestants/${sp.holder_slug}`} className="hover:underline font-bold">{sp.holder}</Link>
+                    </div>
                   </div>
-                  <div className="text-xs font-mono text-[#FF4500]">
-                    Holder: <Link href={`/contestants/${sp.holder_slug}`} className="hover:underline font-bold">{sp.holder}</Link>
-                  </div>
+                  <Zap className="w-4 h-4 text-[#FF4500] shrink-0" />
                 </div>
-                <Zap className="w-4 h-4 text-[#FF4500] shrink-0" />
-              </div>
 
-              <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] leading-relaxed">
-                {sp.description}
-              </p>
+                <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] leading-relaxed">
+                  {sp.description}
+                </p>
+              </div>
 
               <div className="pt-2 border-t border-[#E4E4E7] dark:border-[#232328] flex items-center justify-between text-[11px] font-mono">
                 <span className="text-[#71717A] dark:text-[#A1A1AA]">Status:</span>
-                <span className="font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate max-w-[240px]">
+                <span className="font-semibold text-[#09090B] dark:text-[#F4F4F5] truncate max-w-[200px] sm:max-w-[240px]">
                   {sp.outcome}
                 </span>
               </div>
@@ -496,7 +506,7 @@ export default function NominationsLedgerPage() {
       </section>
 
       {/* Section 4: Individual Contestant Nomination Inspector */}
-      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-6 sm:p-8 shadow-xs space-y-6">
+      <section className="bg-white dark:bg-[#141416] border border-[#E4E4E7] dark:border-[#232328] rounded-xl p-4 sm:p-6 lg:p-8 shadow-xs space-y-6 max-w-full overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E4E4E7] dark:border-[#232328]">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF4500] font-bold">

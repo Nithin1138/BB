@@ -59,17 +59,17 @@ export default function HomePage() {
   return (
     <div className="space-y-12 sm:space-y-16 max-w-[1240px] mx-auto">
       {/* 1. BROADSHEET DATELINE HEADER */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#E4E4E7] dark:border-[#232328] font-mono text-[10px] tracking-[0.2em] uppercase text-[#71717A]">
-        <div className="flex items-center gap-3">
-          <span>TELUGU EDITION • SEASON 10 DASAVATHARAM</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E4E4E7] dark:border-[#232328] font-mono text-[10px] tracking-wider uppercase text-[#71717A]">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <span className="font-bold text-[#09090B] dark:text-[#F4F4F5]">TELUGU S10 DASAVATHARAM</span>
           <span>•</span>
           <span>SEPTEMBER 27, 2026</span>
           <span>•</span>
-          <span className="text-[#FF4500] font-semibold">DAY 24 OF 105</span>
+          <span className="text-[#FF4500] font-bold">DAY 24 OF 105</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-          <span>TRANSMISSION: 23:00 IST STAR MAA / HOTSTAR</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
+          <span className="truncate">STAR MAA / JIOHOTSTAR LIVE</span>
         </div>
       </div>
 

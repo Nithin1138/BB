@@ -95,7 +95,7 @@ export function DebateEditorialCard({ initialDebate }: DebateEditorialCardProps)
           />
         </div>
 
-        <div className="flex items-center justify-between text-[11px] text-[#71717A] mt-2 font-mono tabular-nums">
+        <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] text-[#71717A] mt-2 font-mono tabular-nums">
           <span>{debate.agree_count.toLocaleString()} fans agree</span>
           <span>{debate.disagree_count.toLocaleString()} fans disagree</span>
         </div>
@@ -161,18 +161,18 @@ export function DebateEditorialCard({ initialDebate }: DebateEditorialCardProps)
           </button>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <input
             type="text"
             value={commentInput}
             onChange={(e) => setCommentInput(e.target.value)}
             placeholder={user ? "Add your perspective..." : "Authenticate to join debate..."}
-            className="flex-1 px-3.5 py-2 text-xs bg-[#F4F4F5] dark:bg-[#1B1B1F] border border-[#E4E4E7] dark:border-[#232328] focus:border-[#FF4500] rounded-md outline-hidden text-[#09090B] dark:text-[#F4F4F5] transition-all"
+            className="flex-1 min-w-0 px-3.5 py-2 text-xs bg-[#F4F4F5] dark:bg-[#1B1B1F] border border-[#E4E4E7] dark:border-[#232328] focus:border-[#FF4500] rounded-md outline-hidden text-[#09090B] dark:text-[#F4F4F5] transition-all"
           />
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-4 py-2 bg-[#09090B] dark:bg-[#F4F4F5] hover:bg-black dark:hover:bg-white text-white dark:text-[#09090B] text-xs font-semibold rounded-md transition-all shrink-0 active:scale-95 cursor-pointer font-mono uppercase tracking-wider"
+            className="px-3 sm:px-4 py-2 bg-[#09090B] dark:bg-[#F4F4F5] hover:bg-black dark:hover:bg-white text-white dark:text-[#09090B] text-xs font-semibold rounded-md transition-all shrink-0 active:scale-95 cursor-pointer font-mono uppercase tracking-wider"
           >
             {isSubmitting ? "Posting..." : "Join Debate"}
           </button>

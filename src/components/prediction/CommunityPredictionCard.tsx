@@ -123,12 +123,12 @@ export function CommunityPredictionCard({ stats }: CommunityPredictionCardProps)
           Select Contestant to Forecast:
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2.5">
           {allStats.slice(0, 6).map((stat) => (
             <button
               key={stat.contestant_id}
               onClick={() => setSelectedContestantId(stat.contestant_id)}
-              className={`p-2.5 rounded-md border text-left flex items-center gap-2.5 transition-all duration-150 active:scale-95 cursor-pointer ${
+              className={`p-2.5 sm:p-3 rounded-lg border text-left flex items-center gap-3 transition-all duration-150 active:scale-95 cursor-pointer min-w-0 ${
                 selectedContestantId === stat.contestant_id
                   ? "border-[#FF4500] bg-[#FF4500]/5 dark:bg-[#FF4500]/10 ring-1 ring-[#FF4500]"
                   : "border-[#E4E4E7] dark:border-[#232328] bg-white dark:bg-[#141416] hover:border-[#09090B]/30 dark:hover:border-[#F4F4F5]/30"
@@ -139,9 +139,9 @@ export function CommunityPredictionCard({ stats }: CommunityPredictionCardProps)
                 alt=""
                 className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-2xs shrink-0"
               />
-              <div className="overflow-hidden">
-                <div className="text-xs font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">{stat.contestant_name}</div>
-                <div className="text-[10px] font-mono text-[#71717A] tabular-nums">{stat.community_pct}% danger</div>
+              <div className="overflow-hidden min-w-0 flex-1">
+                <div className="text-sm font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">{stat.contestant_name}</div>
+                <div className="text-[11px] font-mono text-[#71717A] tabular-nums mt-0.5">{stat.community_pct}% danger signal</div>
               </div>
             </button>
           ))}

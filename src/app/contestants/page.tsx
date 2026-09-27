@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { INITIAL_CONTESTANTS } from "@/lib/mock-data";
 import { Sparkline } from "@/components/ui/Sparkline";
-import { ArrowUpRight, ArrowDownRight, Minus, UserCheck, Search, Filter, Zap, ArrowRight, DollarSign, Skull } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Minus, UserCheck, Search, Filter, Zap, ArrowRight, DollarSign, Skull, Shield } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 export default function ContestantsPage() {
@@ -118,89 +118,102 @@ export default function ContestantsPage() {
             >
               <div>
                 {/* Top: Avatar & Status */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-4 min-w-0 flex-1">
-                    <div className="relative shrink-0">
-                      <img
-                        src={contestant.avatar_url}
-                        alt={contestant.name}
-                        className={`w-20 h-20 sm:w-22 sm:h-22 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shadow-sm transition-all ${
-                          contestant.status === 'evicted' || contestant.status === 'walked'
-                            ? 'grayscale opacity-75'
-                            : 'grayscale-0 group-hover:scale-105'
-                        }`}
+                <div className="flex items-start gap-3.5 sm:gap-4">
+                  <div className="relative shrink-0">
+                    <img
+                      src={contestant.avatar_url}
+                      alt={contestant.name}
+                      className={`w-18 h-18 sm:w-22 sm:h-22 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#27272A] shadow-xs transition-all ${
+                        contestant.status === 'evicted' || contestant.status === 'walked'
+                          ? 'grayscale opacity-75'
+                          : 'grayscale-0 group-hover:scale-105'
+                      }`}
+                    />
+                    {contestant.status === "nominated" && (
+                      <span
+                        className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416]"
+                        title="Currently Nominated"
                       />
-                      {contestant.status === "nominated" && (
-                        <span
-                          className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FF4500] border-2 border-white dark:border-[#141416]"
-                          title="Currently Nominated"
-                        />
-                      )}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <h2 className="text-lg sm:text-xl font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] leading-snug">
-                          {contestant.name}
-                        </h2>
-                        {contestant.is_wildcard && (
-                          <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-semibold uppercase">
-                            WC
+                    )}
+                    {contestant.status === "captain" && (
+                      <span
+                        className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#F59E0B] border-2 border-white dark:border-[#141416]"
+                        title="House Captain"
+                      />
+                    )}
+                  </div>
+
+                  <div className="min-w-0 flex-1 flex flex-col justify-center">
+                    <div className="flex items-center justify-between gap-1.5 mb-1">
+                      <span className="text-[10px] font-mono text-[#FF4500] font-semibold uppercase tracking-wider truncate">
+                        {contestant.profession}
+                      </span>
+                      <div className="shrink-0">
+                        {contestant.status === "nominated" ? (
+                          <span className="text-[9px] sm:text-[10px] font-mono font-bold text-[#FF4500] bg-[#FF4500]/10 px-1.5 sm:px-2 py-0.5 rounded-sm uppercase tracking-wider flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#FF4500] animate-pulse" />
+                            Nominated
+                          </span>
+                        ) : contestant.status === "captain" ? (
+                          <span className="text-[9px] sm:text-[10px] font-mono font-bold text-[#F59E0B] bg-[#F59E0B]/10 px-1.5 sm:px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                            Captain
+                          </span>
+                        ) : contestant.status === "evicted" ? (
+                          <span className="text-[9px] sm:text-[10px] font-mono font-bold text-red-600 dark:text-red-400 bg-red-500/10 px-1.5 sm:px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                            Evicted D{contestant.day_exited}
+                          </span>
+                        ) : contestant.status === "walked" ? (
+                          <span className="text-[9px] sm:text-[10px] font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 sm:px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                            Walked ₹15L
+                          </span>
+                        ) : (
+                          <span className="text-[9px] sm:text-[10px] font-mono text-[#71717A] dark:text-[#A1A1AA] bg-[#F4F4F5] dark:bg-[#1A1A1E] px-1.5 sm:px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                            Active
                           </span>
                         )}
                       </div>
-                      {contestant.telugu_name && (
-                        <div className="text-xs text-[#71717A] dark:text-[#A1A1AA] mt-0.5">
-                          {contestant.telugu_name}
-                        </div>
-                      )}
-                      <div className="text-xs font-mono text-[#FF4500] mt-1">
-                        {contestant.profession}
-                      </div>
                     </div>
-                  </div>
 
-                  <div className="shrink-0">
-                    {contestant.status === "nominated" ? (
-                      <span className="text-[10px] font-mono font-bold text-[#FF4500] bg-[#FF4500]/10 px-2 py-0.5 rounded-sm uppercase tracking-wider flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF4500] animate-pulse" />
-                        Nominated
-                      </span>
-                    ) : contestant.status === "captain" ? (
-                      <span className="text-[10px] font-mono font-bold text-[#F59E0B] bg-[#F59E0B]/10 px-2 py-0.5 rounded-sm uppercase tracking-wider">
-                        Captain
-                      </span>
-                    ) : contestant.status === "evicted" ? (
-                      <span className="text-[10px] font-mono font-bold text-red-600 dark:text-red-400 bg-red-500/10 px-2 py-0.5 rounded-sm uppercase tracking-wider">
-                        Evicted D{contestant.day_exited}
-                      </span>
-                    ) : contestant.status === "walked" ? (
-                      <span className="text-[10px] font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-sm uppercase tracking-wider">
-                        Walked ₹15L
-                      </span>
-                    ) : (
-                      <span className="text-[10px] font-mono text-[#71717A] dark:text-[#A1A1AA] bg-[#F4F4F5] dark:bg-[#1A1A1E] px-2 py-0.5 rounded-sm uppercase tracking-wider">
-                        Active
-                      </span>
+                    <div className="flex items-center gap-1.5">
+                      <h2 className="text-base sm:text-lg font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] leading-snug truncate">
+                        {contestant.name}
+                      </h2>
+                      {contestant.is_wildcard && (
+                        <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-semibold uppercase shrink-0">
+                          WC
+                        </span>
+                      )}
+                    </div>
+
+                    {contestant.telugu_name && (
+                      <div className="text-xs text-[#71717A] dark:text-[#A1A1AA] truncate mt-0.5">
+                        {contestant.telugu_name}
+                      </div>
                     )}
                   </div>
                 </div>
 
-                {/* Special Power Badge if held */}
-                {contestant.special_power && (
-                  <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-[#FF4500] bg-[#FF4500]/5 dark:bg-[#FF4500]/10 px-2.5 py-1 rounded border border-[#FF4500]/20">
+                {/* Special Power Badge or Default Slot for uniform card heights */}
+                {contestant.special_power ? (
+                  <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-[#FF4500] bg-[#FF4500]/5 dark:bg-[#FF4500]/10 px-2.5 py-1 rounded border border-[#FF4500]/20 min-h-[30px]">
                     <Zap className="w-3 h-3 shrink-0" />
-                    <span className="font-semibold">{contestant.special_power.name}</span>
+                    <span className="font-semibold truncate">{contestant.special_power.name}</span>
                     <span className="text-[#71717A] dark:text-[#A1A1AA] truncate">({contestant.special_power.category})</span>
+                  </div>
+                ) : (
+                  <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-[#71717A]/50 dark:text-[#A1A1AA]/50 px-2.5 py-1 rounded border border-dashed border-[#E4E4E7]/60 dark:border-[#232328]/60 min-h-[30px]">
+                    <Shield className="w-3 h-3 shrink-0 opacity-40" />
+                    <span className="truncate">Regular Housemate</span>
                   </div>
                 )}
 
-                {/* Bio snippet */}
-                <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] leading-relaxed mt-3.5 line-clamp-2">
+                {/* Bio snippet with uniform 2-line height */}
+                <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] leading-relaxed mt-3 line-clamp-2 min-h-[2.5rem]">
                   {contestant.short_bio}
                 </p>
 
-                {/* Quote */}
-                <div className="text-xs italic font-serif text-[#71717A] dark:text-[#A1A1AA] mt-2.5 pl-2.5 border-l-2 border-[#FF4500]">
+                {/* Quote with uniform height */}
+                <div className="text-xs italic font-serif text-[#71717A] dark:text-[#A1A1AA] mt-2.5 pl-2.5 border-l-2 border-[#FF4500] line-clamp-2 min-h-[2.25rem] flex items-center">
                   "{contestant.quote}"
                 </div>
 
