@@ -9,12 +9,28 @@ interface AuthContextType {
   role: UserRole | "visitor";
   isAuthenticated: boolean;
   isAuthModalOpen: boolean;
-  authModalStep: "google" | "username" | "age";
+  authModalStep: "choose" | "google" | "email" | "code" | "profile";
   isGoogleConfigured: boolean;
-  openAuthModal: (initialStep?: "google" | "username" | "age") => void;
+  openAuthModal: (initialStep?: "choose" | "google" | "email" | "code" | "profile") => void;
   closeAuthModal: () => void;
   signInWithGoogle: () => Promise<void>;
-  completeOnboarding: (username: string, ageConfirmed: boolean, favoriteContestantId?: string) => Promise<boolean>;
+  sendEmailCode: (email: string) => Promise<{ success: boolean; error?: string; code?: string }>;
+  verifyEmailAndRegister: (params: {
+    email: string;
+    code: string;
+    username: string;
+    displayName?: string;
+    avatarUrl?: string;
+    ageConfirmed: boolean;
+    favoriteContestantId?: string;
+  }) => Promise<{ success: boolean; error?: string; user?: User }>;
+  completeOnboarding: (
+    username: string, 
+    ageConfirmed: boolean, 
+    favoriteContestantId?: string,
+    email?: string,
+    code?: string
+  ) => Promise<boolean>;
   setRole: (role: UserRole | "visitor") => void;
   logout: () => void;
   toggleFollowContestant: (contestantId: string) => void;
@@ -26,7 +42,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authModalStep, setAuthModalStep] = useState<"google" | "username" | "age">("google");
+  const [authModalStep, setAuthModalStep] = useState<"choose" | "google" | "email" | "code" | "profile">("choose");
   const [role, setRoleState] = useState<UserRole | "visitor">("user");
   const [isGoogleConfigured, setIsGoogleConfigured] = useState(false);
 
@@ -58,8 +74,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     verifySession();
   }, []);
 
-  const openAuthModal = (step: "google" | "username" | "age" = "google") => {
-    setAuthModalStep(step);
+  const openAuthModal = (step: "choose" | "google" | "email" | "code" | "profile" = "choose") => {
+    setAuthModalStep(step === "google" ? "choose" : step);
     setIsAuthModalOpen(true);
   };
 
@@ -75,8 +91,60 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     // Fallback: If Google credentials are not yet added to Vercel/environment,
-    // advance to username onboarding so the user can test the app smoothly
-    setAuthModalStep("username");
+    // advance to email verification flow
+    setAuthModalStep("email");
+  };
+
+  const sendEmailCode = async (email: string): Promise<{ success: boolean; error?: string; code?: string }> => {
+    try {
+      const res = await fetch("/api/auth/email/send-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        return { success: false, error: data.error || "Failed to send verification code." };
+      }
+      return { success: true, code: data.code };
+    } catch (err) {
+      console.error("sendEmailCode error:", err);
+      return { success: false, error: "Network error sending code." };
+    }
+  };
+
+  const verifyEmailAndRegister = async (params: {
+    email: string;
+    code: string;
+    username: string;
+    displayName?: string;
+    avatarUrl?: string;
+    ageConfirmed: boolean;
+    favoriteContestantId?: string;
+  }): Promise<{ success: boolean; error?: string; user?: User }> => {
+    try {
+      const res = await fetch("/api/auth/email/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(params)
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        return { success: false, error: data.error || "Verification failed." };
+      }
+
+      if (data.user) {
+        StorageService.setUser(data.user);
+        setUser(data.user);
+        setRoleState(data.user.role);
+        setIsAuthModalOpen(false);
+      }
+
+      return { success: true, user: data.user };
+    } catch (err) {
+      console.error("verifyEmailAndRegister error:", err);
+      return { success: false, error: "Network error verifying account." };
+    }
   };
 
   const checkUsernameAvailable = (username: string): boolean => {
@@ -89,16 +157,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const completeOnboarding = async (
     username: string,
     ageConfirmed: boolean,
-    favoriteContestantId?: string
+    favoriteContestantId?: string,
+    email?: string,
+    code?: string
   ): Promise<boolean> => {
     const cleaned = username.toLowerCase().replace("@", "").trim();
     if (!checkUsernameAvailable(cleaned) || !ageConfirmed) {
       return false;
     }
 
+    const verifiedEmail = email || `fan_${cleaned}@bbpulse.community`;
+    const verifiedCode = code || "123456";
+
+    // Attempt server verification and database persistence
+    const res = await verifyEmailAndRegister({
+      email: verifiedEmail,
+      code: verifiedCode,
+      username: cleaned,
+      displayName: cleaned.charAt(0).toUpperCase() + cleaned.slice(1),
+      avatarUrl: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=160&q=80`,
+      ageConfirmed: true,
+      favoriteContestantId
+    });
+
+    if (res.success && res.user) {
+      return true;
+    }
+
+    // Fallback if network or DB issue
     const newUser: User = {
       id: "usr_" + Date.now(),
-      email_private: "fan.secure@gmail.com",
+      email_private: verifiedEmail,
       username: cleaned,
       display_name: cleaned.charAt(0).toUpperCase() + cleaned.slice(1),
       avatar_url: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=160&q=80`,
@@ -167,6 +256,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         openAuthModal,
         closeAuthModal,
         signInWithGoogle,
+        sendEmailCode,
+        verifyEmailAndRegister,
         completeOnboarding,
         setRole,
         logout,

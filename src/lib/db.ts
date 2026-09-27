@@ -1,5 +1,8 @@
 import { neon, NeonQueryFunction } from "@neondatabase/serverless";
-import { User, UserSettings, ChatRoom, ChatMessage, DirectMessage, UpcomingEvent } from "@/types";
+import { User, UserSettings, ChatRoom, ChatMessage, DirectMessage, UpcomingEvent, Poll, PollOption } from "@/types";
+
+// Regex to validate standard UUID format
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // Parse and validate database connection URL
 function getSanitizedDbUrl(): string | null {
@@ -31,21 +34,42 @@ export const UserRepository = {
   async findById(id: string): Promise<User | null> {
     if (!sql) return null;
     try {
-      const rows = await sql`
-        SELECT 
-          u.id, 
-          u.role, 
-          u.status,
-          p.username, 
-          p.display_name, 
-          p.avatar_url, 
-          p.bio,
-          u.created_at
-        FROM users u
-        LEFT JOIN profiles p ON p.user_id = u.id
-        WHERE u.id = ${id}
-        LIMIT 1
-      `;
+      const isUuid = UUID_REGEX.test(id);
+      const rows = isUuid
+        ? await sql`
+            SELECT 
+              u.id, 
+              u.email_private,
+              u.role, 
+              u.status,
+              p.username, 
+              p.display_name, 
+              p.avatar_url, 
+              p.bio,
+              p.age_confirmed,
+              u.created_at
+            FROM users u
+            LEFT JOIN profiles p ON p.user_id = u.id
+            WHERE u.id = ${id}
+            LIMIT 1
+          `
+        : await sql`
+            SELECT 
+              u.id, 
+              u.email_private,
+              u.role, 
+              u.status,
+              p.username, 
+              p.display_name, 
+              p.avatar_url, 
+              p.bio,
+              p.age_confirmed,
+              u.created_at
+            FROM users u
+            LEFT JOIN profiles p ON p.user_id = u.id
+            WHERE u.auth_provider_id = ${id} OR LOWER(u.email_private) = LOWER(${id})
+            LIMIT 1
+          `;
       if (!rows || rows.length === 0) return null;
       const r = rows[0];
       return {
@@ -56,7 +80,7 @@ export const UserRepository = {
         avatar_url: (r.avatar_url as string) || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
         bio: (r.bio as string) || "",
         role: (r.role as User['role']) || "user",
-        age_confirmed: true,
+        age_confirmed: Boolean(r.age_confirmed),
         joined_date: new Date(r.created_at as string).toISOString(),
         accuracy_rate: 85,
         predictions_count: 0,
@@ -69,6 +93,50 @@ export const UserRepository = {
     }
   },
 
+  async findByEmail(email: string): Promise<User | null> {
+    if (!sql) return null;
+    try {
+      const cleanEmail = email.toLowerCase().trim();
+      const rows = await sql`
+        SELECT 
+          u.id, 
+          u.email_private,
+          u.role, 
+          u.status,
+          p.username, 
+          p.display_name, 
+          p.avatar_url, 
+          p.bio,
+          p.age_confirmed,
+          u.created_at
+        FROM users u
+        LEFT JOIN profiles p ON p.user_id = u.id
+        WHERE LOWER(u.email_private) = ${cleanEmail}
+        LIMIT 1
+      `;
+      if (!rows || rows.length === 0) return null;
+      const r = rows[0];
+      return {
+        id: r.id as string,
+        email_private: (r.email_private as string) || cleanEmail,
+        username: (r.username as string) || "user",
+        display_name: (r.display_name as string) || "BBPulse User",
+        avatar_url: (r.avatar_url as string) || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+        bio: (r.bio as string) || "",
+        role: (r.role as User['role']) || "user",
+        age_confirmed: Boolean(r.age_confirmed),
+        joined_date: new Date(r.created_at as string).toISOString(),
+        accuracy_rate: 85,
+        predictions_count: 0,
+        followed_contestants: [],
+        blocked_users: []
+      };
+    } catch (err) {
+      console.error("[NeonDB] UserRepository.findByEmail error:", err);
+      return null;
+    }
+  },
+
   async upsert(user: {
     auth_provider_id: string;
     email: string;
@@ -77,28 +145,62 @@ export const UserRepository = {
     avatar_url: string;
     role?: 'user' | 'moderator' | 'admin';
     bio?: string;
+    age_confirmed?: boolean;
+    favorite_contestant_id?: string;
   }): Promise<User | null> {
     if (!sql) return null;
     try {
-      // 1. Upsert users table
-      const userRows = await sql`
-        INSERT INTO users (auth_provider_id, email_private, role, status)
-        VALUES (${user.auth_provider_id}, ${user.email}, ${user.role || 'user'}, 'active')
-        ON CONFLICT (auth_provider_id) 
-        DO UPDATE SET updated_at = NOW()
-        RETURNING id, role, status, created_at
+      const cleanEmail = user.email.toLowerCase().trim();
+
+      // 1. Check if user already exists by auth_provider_id or email
+      const existing = await sql`
+        SELECT id FROM users 
+        WHERE auth_provider_id = ${user.auth_provider_id} OR LOWER(email_private) = ${cleanEmail}
+        LIMIT 1
       `;
-      const userId = userRows[0].id as string;
+
+      let userId: string;
+      let createdAt: string = new Date().toISOString();
+
+      if (existing && existing.length > 0) {
+        userId = existing[0].id as string;
+        await sql`
+          UPDATE users 
+          SET 
+            auth_provider_id = ${user.auth_provider_id},
+            email_private = ${cleanEmail},
+            role = COALESCE(${user.role}, role),
+            updated_at = NOW()
+          WHERE id = ${userId}
+        `;
+      } else {
+        const userRows = await sql`
+          INSERT INTO users (auth_provider_id, email_private, role, status)
+          VALUES (${user.auth_provider_id}, ${cleanEmail}, ${user.role || 'user'}, 'active')
+          RETURNING id, created_at
+        `;
+        userId = userRows[0].id as string;
+        createdAt = userRows[0].created_at as string;
+      }
 
       // 2. Upsert profiles table
       await sql`
-        INSERT INTO profiles (user_id, username, display_name, avatar_url, bio)
-        VALUES (${userId}, ${user.username}, ${user.display_name}, ${user.avatar_url}, ${user.bio || ''})
+        INSERT INTO profiles (user_id, username, display_name, avatar_url, bio, age_confirmed)
+        VALUES (
+          ${userId}, 
+          ${user.username}, 
+          ${user.display_name}, 
+          ${user.avatar_url}, 
+          ${user.bio || ''},
+          ${user.age_confirmed ?? true}
+        )
         ON CONFLICT (user_id) 
         DO UPDATE SET 
+          username = EXCLUDED.username,
           display_name = EXCLUDED.display_name,
           avatar_url = EXCLUDED.avatar_url,
           bio = EXCLUDED.bio,
+          age_confirmed = EXCLUDED.age_confirmed,
           updated_at = NOW()
       `;
 
@@ -111,17 +213,17 @@ export const UserRepository = {
 
       return {
         id: userId,
-        email_private: user.email,
+        email_private: cleanEmail,
         username: user.username,
         display_name: user.display_name,
         avatar_url: user.avatar_url,
         bio: user.bio || "",
         role: user.role || "user",
         age_confirmed: true,
-        joined_date: new Date(userRows[0].created_at as string).toISOString(),
+        joined_date: new Date(createdAt).toISOString(),
         accuracy_rate: 85,
         predictions_count: 0,
-        followed_contestants: [],
+        followed_contestants: user.favorite_contestant_id ? [user.favorite_contestant_id] : [],
         blocked_users: []
       };
     } catch (err) {
@@ -492,3 +594,227 @@ export const UpcomingRepository = {
     }
   }
 };
+
+// ============================================================================
+// 6. POLLS & VERIFIED VOTES REPOSITORY
+// ============================================================================
+export const PollRepository = {
+  async getActivePoll(userIdOrEmail?: string): Promise<{
+    poll: Poll;
+    userVote: { optionId: string; contestantName: string; votedAt: string } | null;
+  } | null> {
+    if (!sql) return null;
+    try {
+      // 1. Fetch active poll
+      const pollRows = await sql`
+        SELECT 
+          p.id, 
+          p.season_id, 
+          p.title, 
+          p.description, 
+          p.week_number, 
+          p.status, 
+          p.start_at, 
+          p.closes_at, 
+          p.integrity_note, 
+          p.created_at
+        FROM polls p
+        WHERE p.status = 'active'
+        ORDER BY p.week_number DESC, p.created_at DESC
+        LIMIT 1
+      `;
+      if (!pollRows || pollRows.length === 0) return null;
+      const p = pollRows[0];
+
+      // 2. Fetch options with contestant details
+      const optionRows = await sql`
+        SELECT 
+          po.id as option_id,
+          po.poll_id,
+          po.contestant_id,
+          po.sort_order,
+          po.vote_count,
+          c.name as contestant_name,
+          c.avatar_url as contestant_avatar,
+          c.telugu_name,
+          c.slug as contestant_slug
+        FROM poll_options po
+        JOIN contestants c ON c.id = po.contestant_id
+        WHERE po.poll_id = ${p.id}
+        ORDER BY po.sort_order ASC, po.vote_count DESC
+      `;
+
+      const totalVotes = optionRows.reduce((sum, opt) => sum + (Number(opt.vote_count) || 0), 0);
+
+      const options: PollOption[] = optionRows.map(opt => {
+        const count = Number(opt.vote_count) || 0;
+        const percentage = totalVotes > 0 ? Number(((count / totalVotes) * 100).toFixed(1)) : 0;
+        return {
+          id: opt.option_id as string,
+          poll_id: p.id as string,
+          contestant_id: opt.contestant_id as string,
+          contestant_name: opt.contestant_name as string,
+          contestant_avatar: opt.contestant_avatar as string,
+          vote_count: count,
+          percentage
+        };
+      });
+
+      const poll: Poll = {
+        id: p.id as string,
+        season_id: p.season_id as string,
+        title: p.title as string,
+        description: (p.description as string) || "",
+        week_number: Number(p.week_number) || 4,
+        status: p.status as Poll['status'],
+        start_at: new Date(p.start_at as string).toISOString(),
+        closes_at: new Date(p.closes_at as string).toISOString(),
+        total_votes: totalVotes,
+        options,
+        integrity_note: (p.integrity_note as string) || "One verified vote per BBPulse account."
+      };
+
+      // 3. Check if user has already voted
+      let userVote: { optionId: string; contestantName: string; votedAt: string } | null = null;
+      if (userIdOrEmail) {
+        const isUuid = UUID_REGEX.test(userIdOrEmail);
+        const voteRows = isUuid
+          ? await sql`
+              SELECT v.option_id, v.created_at, c.name as contestant_name
+              FROM votes v
+              JOIN poll_options po ON po.id = v.option_id
+              JOIN contestants c ON c.id = po.contestant_id
+              WHERE v.poll_id = ${p.id} AND v.user_id = ${userIdOrEmail}
+              LIMIT 1
+            `
+          : await sql`
+              SELECT v.option_id, v.created_at, c.name as contestant_name
+              FROM votes v
+              JOIN poll_options po ON po.id = v.option_id
+              JOIN contestants c ON c.id = po.contestant_id
+              JOIN users u ON u.id = v.user_id
+              WHERE v.poll_id = ${p.id} AND (u.auth_provider_id = ${userIdOrEmail} OR LOWER(u.email_private) = LOWER(${userIdOrEmail}))
+              LIMIT 1
+            `;
+
+        if (voteRows && voteRows.length > 0) {
+          userVote = {
+            optionId: voteRows[0].option_id as string,
+            contestantName: voteRows[0].contestant_name as string,
+            votedAt: new Date(voteRows[0].created_at as string).toISOString()
+          };
+        }
+      }
+
+      return { poll, userVote };
+    } catch (err) {
+      console.error("[NeonDB] PollRepository.getActivePoll error:", err);
+      return null;
+    }
+  },
+
+  async submitVote(params: {
+    pollId: string;
+    userIdOrEmail: string;
+    optionId: string;
+    ipHash?: string;
+  }): Promise<{
+    success: boolean;
+    error?: string;
+    alreadyVoted?: boolean;
+    poll?: Poll;
+    userVote?: { optionId: string; contestantName: string; votedAt: string };
+  }> {
+    if (!sql) return { success: false, error: "Database not connected" };
+    try {
+      const isUuid = UUID_REGEX.test(params.userIdOrEmail);
+
+      // 1. Resolve real user UUID in PostgreSQL
+      let resolvedUserId: string | null = null;
+      if (isUuid) {
+        const userCheck = await sql`SELECT id FROM users WHERE id = ${params.userIdOrEmail} LIMIT 1`;
+        if (userCheck && userCheck.length > 0) {
+          resolvedUserId = userCheck[0].id as string;
+        }
+      } else {
+        const userCheck = await sql`
+          SELECT id FROM users 
+          WHERE auth_provider_id = ${params.userIdOrEmail} OR LOWER(email_private) = LOWER(${params.userIdOrEmail})
+          LIMIT 1
+        `;
+        if (userCheck && userCheck.length > 0) {
+          resolvedUserId = userCheck[0].id as string;
+        }
+      }
+
+      if (!resolvedUserId) {
+        return {
+          success: false,
+          error: "Verified user account required to vote. Please sign in or verify your email."
+        };
+      }
+
+      // 2. Check if user already voted in this poll
+      const existingVote = await sql`
+        SELECT v.option_id, v.created_at, c.name as contestant_name
+        FROM votes v
+        JOIN poll_options po ON po.id = v.option_id
+        JOIN contestants c ON c.id = po.contestant_id
+        WHERE v.poll_id = ${params.pollId} AND v.user_id = ${resolvedUserId}
+        LIMIT 1
+      `;
+      if (existingVote && existingVote.length > 0) {
+        return {
+          success: false,
+          alreadyVoted: true,
+          error: "You have already cast your verified ballot for this eviction cycle.",
+          userVote: {
+            optionId: existingVote[0].option_id as string,
+            contestantName: existingVote[0].contestant_name as string,
+            votedAt: new Date(existingVote[0].created_at as string).toISOString()
+          }
+        };
+      }
+
+      // 3. Insert vote into votes table
+      await sql`
+        INSERT INTO votes (poll_id, user_id, option_id, ip_hash, integrity_status)
+        VALUES (${params.pollId}, ${resolvedUserId}, ${params.optionId}, ${params.ipHash || null}, 'valid')
+      `;
+
+      // 4. Atomically increment vote_count in poll_options
+      await sql`
+        UPDATE poll_options
+        SET vote_count = vote_count + 1
+        WHERE id = ${params.optionId}
+      `;
+
+      // 5. Fetch updated poll state with calculated percentages
+      const activeData = await this.getActivePoll(resolvedUserId);
+      if (!activeData) {
+        return { success: true };
+      }
+
+      return {
+        success: true,
+        poll: activeData.poll,
+        userVote: activeData.userVote || {
+          optionId: params.optionId,
+          contestantName: activeData.poll.options.find(o => o.id === params.optionId)?.contestant_name || "Contestant",
+          votedAt: new Date().toISOString()
+        }
+      };
+    } catch (err: any) {
+      console.error("[NeonDB] PollRepository.submitVote error:", err);
+      if (err?.code === "23505") {
+        return {
+          success: false,
+          alreadyVoted: true,
+          error: "You have already cast your verified ballot for this eviction cycle."
+        };
+      }
+      return { success: false, error: "Failed to record vote. Please try again." };
+    }
+  }
+};
+
