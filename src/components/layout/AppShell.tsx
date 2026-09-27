@@ -17,7 +17,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <div className="min-h-screen flex flex-col bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#09090B] dark:text-[#F4F4F5] selection:bg-[#FF4500]/20 selection:text-[#FF4500] transition-colors duration-200 overflow-x-hidden w-full max-w-full">
+        <div className="min-h-screen flex flex-col bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#09090B] dark:text-[#F4F4F5] selection:bg-[#FF4500]/20 selection:text-[#FF4500] transition-colors duration-200 overflow-x-clip w-full">
           {/* Global Header */}
           <Header
             onOpenSearch={() => setIsSearchOpen(true)}

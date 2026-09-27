@@ -8,12 +8,11 @@ import {
   MessageSquare,
   Radio,
   TrendingUp,
-  Target,
-  Menu
+  Target
 } from "lucide-react";
 
 interface BottomNavProps {
-  onOpenMobileMenu: () => void;
+  onOpenMobileMenu?: () => void;
 }
 
 export function BottomNav({ onOpenMobileMenu }: BottomNavProps) {
@@ -29,7 +28,7 @@ export function BottomNav({ onOpenMobileMenu }: BottomNavProps) {
 
   return (
     <nav
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#0C0C0D]/95 backdrop-blur-xl border-t border-[#E4E4E7] dark:border-[#232328] px-1 py-1 shadow-[0_-4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_-4px_25px_rgba(0,0,0,0.7)] select-none transition-colors duration-200"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#0C0C0D]/95 backdrop-blur-xl border-t border-[#E4E4E7] dark:border-[#232328] px-2 py-1 shadow-[0_-4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_-4px_25px_rgba(0,0,0,0.7)] select-none transition-colors duration-200"
       style={{ paddingBottom: "max(0.6rem, env(safe-area-inset-bottom))" }}
       aria-label="Mobile Navigation"
     >
@@ -63,16 +62,6 @@ export function BottomNav({ onOpenMobileMenu }: BottomNavProps) {
             </Link>
           );
         })}
-
-        {/* More / Menu Drawer Trigger */}
-        <button
-          onClick={onOpenMobileMenu}
-          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-2xl text-[#626873] dark:text-[#9CA3AF] hover:text-[#111318] dark:hover:text-white transition-all duration-200 relative min-w-[58px] active:scale-90 cursor-pointer"
-          aria-label="More options"
-        >
-          <Menu className="w-5 h-5 stroke-[1.8]" />
-          <span className="text-[10px] mt-0.5 font-medium tracking-tight">More</span>
-        </button>
       </div>
     </nav>
   );
