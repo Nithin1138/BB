@@ -8,11 +8,18 @@ export async function GET() {
   try {
     const dbContestants = await WikipediaSyncService.getContestants();
     if (dbContestants && dbContestants.length > 0) {
-      // Merge with initial mock metadata (sparkline, voting power, etc) if any
-      const mockMap = new Map(INITIAL_CONTESTANTS.map(c => [c.id, c]));
+      // Index mock metadata by id, slug, and name
+      const mockMap = new Map<string, any>();
+      INITIAL_CONTESTANTS.forEach(c => {
+        mockMap.set(c.id, c);
+        mockMap.set(c.slug.toLowerCase(), c);
+        mockMap.set(c.name.toLowerCase(), c);
+      });
 
       const contestants = dbContestants.map((dbRow: any) => {
-        const mock = mockMap.get(dbRow.id) || mockMap.get(dbRow.slug) || {};
+        const rowSlug = (dbRow.slug || "").toLowerCase();
+        const rowName = (dbRow.name || "").toLowerCase();
+        const mock = mockMap.get(dbRow.id) || mockMap.get(rowSlug) || mockMap.get(rowName) || {};
         return {
           id: dbRow.id,
           name: dbRow.name,

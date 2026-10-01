@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   INITIAL_CONTESTANTS,
@@ -13,7 +13,7 @@ import { DebateEditorialCard } from "@/components/debate/DebateEditorialCard";
 import { CommunityPredictionCard } from "@/components/prediction/CommunityPredictionCard";
 import { PostCard } from "@/components/discussions/PostCard";
 import { ShareModal } from "@/components/share/ShareModal";
-import { ShareCardConfig } from "@/types";
+import { ShareCardConfig, Contestant } from "@/types";
 import {
   ArrowRight,
   TrendingUp,
@@ -29,28 +29,58 @@ import {
 } from "lucide-react";
 
 export default function HomePage() {
+  const [contestantsList, setContestantsList] = useState<Contestant[]>(INITIAL_CONTESTANTS);
   const [shareConfig, setShareConfig] = useState<ShareCardConfig | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<"all" | "nominated" | "safe">("all");
 
-  const filteredContestants = INITIAL_CONTESTANTS.filter(c => {
+  const loadContestants = async () => {
+    try {
+      const res = await fetch("/api/contestants");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.contestants && data.contestants.length > 0) {
+          setContestantsList(data.contestants);
+        }
+      }
+    } catch {
+      // fallback
+    }
+  };
+
+  useEffect(() => {
+    loadContestants();
+
+    const handleSync = () => {
+      loadContestants();
+    };
+
+    window.addEventListener("bbpulse:wikipedia_synced", handleSync);
+    return () => {
+      window.removeEventListener("bbpulse:wikipedia_synced", handleSync);
+    };
+  }, []);
+
+  const leader = contestantsList[0] || INITIAL_CONTESTANTS[0];
+
+  const filteredContestants = contestantsList.filter(c => {
     if (selectedFilter === "nominated") return c.status === "nominated";
     if (selectedFilter === "safe") return c.status === "active" || c.status === "captain";
     return true;
   }).slice(0, 6);
 
-  const risingContestants = [...INITIAL_CONTESTANTS].sort((a, b) => b.pulse_change - a.pulse_change).slice(0, 3);
-  const fallingContestants = [...INITIAL_CONTESTANTS].sort((a, b) => a.pulse_change - b.pulse_change).slice(0, 3);
-  const mostDiscussed = [...INITIAL_CONTESTANTS].sort((a, b) => b.discussion_count - a.discussion_count).slice(0, 3);
+  const risingContestants = [...contestantsList].sort((a, b) => b.pulse_change - a.pulse_change).slice(0, 3);
+  const fallingContestants = [...contestantsList].sort((a, b) => a.pulse_change - b.pulse_change).slice(0, 3);
+  const mostDiscussed = [...contestantsList].sort((a, b) => b.discussion_count - a.discussion_count).slice(0, 3);
   const highlightedPosts = INITIAL_POSTS.slice(0, 3);
 
   const handleOpenShare = () => {
     setShareConfig({
       type: "trend",
       headline: "The house is divided. The verified audience record.",
-      main_metric: `${INITIAL_CONTESTANTS[0].pulse_score} Pulse`,
-      secondary_metric: `${INITIAL_CONTESTANTS[0].name} leads daily community attention`,
-      contestant_name: INITIAL_CONTESTANTS[0].name,
-      contestant_avatar: INITIAL_CONTESTANTS[0].avatar_url,
+      main_metric: `${leader.pulse_score} Pulse`,
+      secondary_metric: `${leader.name} leads daily community attention`,
+      contestant_name: leader.name,
+      contestant_avatar: leader.avatar_url,
       disclaimer: "Daily BBPulse Fan Intelligence Signal",
       url: "/"
     });
@@ -158,24 +188,24 @@ export default function HomePage() {
 
               <div className="flex items-start gap-4">
                 <img
-                  src={INITIAL_CONTESTANTS[0].avatar_url}
-                  alt={INITIAL_CONTESTANTS[0].name}
+                  src={leader.avatar_url}
+                  alt={leader.name}
                   className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-[#E4E4E7] dark:border-[#232328] shadow-md shrink-0"
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline gap-2">
                     <h2 className="text-xl font-serif font-bold text-[#09090B] dark:text-[#F4F4F5] truncate">
-                      {INITIAL_CONTESTANTS[0].name}
+                      {leader.name}
                     </h2>
                     <span className="text-xs text-[#71717A] shrink-0 font-medium">
-                      ({INITIAL_CONTESTANTS[0].telugu_name})
+                      ({leader.telugu_name})
                     </span>
                   </div>
                   <div className="text-xs text-[#52525B] dark:text-[#A1A1AA] mt-0.5">
-                    {INITIAL_CONTESTANTS[0].profession}
+                    {leader.profession}
                   </div>
                   <blockquote className="font-serif italic text-xs text-[#71717A] mt-2 border-l-2 border-[#FF4500] pl-2 line-clamp-2">
-                    "{INITIAL_CONTESTANTS[0].quote}"
+                    "{leader.quote}"
                   </blockquote>
                 </div>
               </div>
@@ -184,7 +214,7 @@ export default function HomePage() {
                 <div className="p-2 rounded-md bg-[#F4F4F5] dark:bg-[#1B1B1F]">
                   <div className="font-mono text-[9px] uppercase tracking-wider text-[#71717A]">Pulse Index</div>
                   <div className="text-lg font-mono font-bold tabular-nums text-[#09090B] dark:text-[#F4F4F5]">
-                    {INITIAL_CONTESTANTS[0].pulse_score}
+                    {leader.pulse_score}
                   </div>
                 </div>
                 <div className="p-2 rounded-md bg-[#F4F4F5] dark:bg-[#1B1B1F]">
@@ -202,7 +232,7 @@ export default function HomePage() {
               </div>
 
               <Link
-                href={`/contestants/${INITIAL_CONTESTANTS[0].slug}`}
+                href={`/contestants/${leader.slug}`}
                 className="w-full py-2 bg-[#F4F4F5] dark:bg-[#1B1B1F] hover:bg-[#E4E4E7] dark:hover:bg-[#232328] text-[#09090B] dark:text-[#F4F4F5] rounded-md text-xs font-mono uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 transition-all active:scale-98"
               >
                 <span>Examine Full Dossier</span>

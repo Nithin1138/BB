@@ -246,7 +246,7 @@ export const WikipediaSyncService = {
     const seasonId = seasons[0]?.id;
 
     // D. Fetch existing contestants from Neon DB
-    const dbContestants = await sql`SELECT id, name, slug, status, short_bio FROM contestants`;
+    const dbContestants = await sql`SELECT id, name, slug, status, exit_day, exit_reason, short_bio FROM contestants`;
 
     // E. Match and update/insert contestants in Neon PostgreSQL
     for (const h of parsed.housemates) {
@@ -258,16 +258,20 @@ export const WikipediaSyncService = {
       });
 
       if (existing) {
-        // Only update if status or exit info has updated
-        if (existing.status !== h.mappedStatus && (h.mappedStatus === "evicted" || h.mappedStatus === "walked" || h.mappedStatus === "captain")) {
+        const statusChanged = existing.status !== h.mappedStatus;
+        const exitChanged = h.dayExited && existing.exit_day !== h.dayExited;
+
+        if (statusChanged || exitChanged) {
           await sql`
             UPDATE contestants
             SET 
               status = ${h.mappedStatus},
+              exit_day = ${h.dayExited || existing.exit_day || null},
+              exit_reason = ${h.rawStatus || existing.exit_reason || null},
               updated_at = NOW()
             WHERE id = ${existing.id}
           `;
-          changes.push(`Updated ${existing.name} status: ${existing.status} -> ${h.mappedStatus} (${h.rawStatus})`);
+          changes.push(`Updated ${existing.name}: status=${h.mappedStatus}, exit=${h.dayExited || 'N/A'} (${h.rawStatus})`);
         }
       } else if (seasonId) {
         // New wildcard contestant entered house!
@@ -360,25 +364,9 @@ export const WikipediaSyncService = {
       const sql = getDbClient();
       if (!sql) return [];
       const rows = await sql`
-        SELECT 
-          id, 
-          season_id, 
-          name, 
-          slug, 
-          avatar_url, 
-          profession, 
-          short_bio, 
-          status, 
-          pulse_score, 
-          votes_count, 
-          quote, 
-          telugu_name, 
-          instagram_handle, 
-          special_power, 
-          exit_day, 
-          exit_reason
+        SELECT *
         FROM contestants
-        ORDER BY pulse_score DESC, votes_count DESC, id ASC
+        ORDER BY pulse_score DESC, id ASC
       `;
       return rows;
     } catch (err) {
