@@ -104,6 +104,7 @@ export const WikipediaSyncService = {
     housemates: WikiParsedContestant[];
     weeklyThemes: string[];
     currentCaptain?: string;
+    currentNominees: string[];
   }> {
     let html = "";
     try {
@@ -130,6 +131,84 @@ export const WikipediaSyncService = {
     const housemates: WikiParsedContestant[] = [];
     const weeklyThemes: string[] = [];
     let currentCaptain: string | undefined = undefined;
+    let currentNominees: string[] = [];
+
+    // Parse Nominations table to identify active Captain and Nominees against public vote
+    const nomIdx = html.indexOf("Nominations table");
+    if (nomIdx !== -1) {
+      const tableStart = html.indexOf("<table", nomIdx);
+      const tableEnd = html.indexOf("</table>", tableStart);
+      if (tableStart !== -1 && tableEnd !== -1) {
+        const tableHtml = html.slice(tableStart, tableEnd + 8);
+        const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/g;
+        let rowMatch;
+        while ((rowMatch = rowRegex.exec(tableHtml)) !== null) {
+          const row = rowMatch[1];
+          const thMatch = row.match(/<th[^>]*>([\s\S]*?)<\/th>/i);
+          const thText = thMatch ? thMatch[1].replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() : "";
+
+          // Parse Weekly Theme
+          if (thText.toLowerCase().includes("weekly") && thText.toLowerCase().includes("theme")) {
+            const allThs = row.match(/<th[^>]*>([\s\S]*?)<\/th>/g) || [];
+            for (const th of allThs) {
+              const clean = th.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+              if (clean && !clean.toLowerCase().includes("weekly") && clean !== "TBA") {
+                weeklyThemes.push(clean);
+              }
+            }
+          }
+
+          // Parse House Captain row (handling replaced/stripped captains with <s>...</s>)
+          if (thText.toLowerCase() === "house captain") {
+            const tdRegex = /<td[^>]*>([\s\S]*?)<\/td>/g;
+            let tdMatch;
+            const captainTds: string[] = [];
+            while ((tdMatch = tdRegex.exec(row)) !== null) {
+              captainTds.push(tdMatch[1]);
+            }
+            for (let i = captainTds.length - 1; i >= 0; i--) {
+              const td = captainTds[i];
+              // Strip strikethrough tags (e.g. <s>Mukesh</s>)
+              const cleaned = td
+                .replace(/<s\b[^>]*>[\s\S]*?<\/s>/gi, "")
+                .replace(/<del\b[^>]*>[\s\S]*?<\/del>/gi, "")
+                .replace(/<[^>]*>/g, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+              if (cleaned && cleaned.length > 1) {
+                currentCaptain = cleaned;
+                break;
+              }
+            }
+          }
+
+          // Parse Against Public Vote row
+          if (thText.toLowerCase().includes("against") && thText.toLowerCase().includes("public vote")) {
+            const tdRegex = /<td[^>]*>([\s\S]*?)<\/td>/g;
+            let tdMatch;
+            const voteTds: string[] = [];
+            while ((tdMatch = tdRegex.exec(row)) !== null) {
+              voteTds.push(tdMatch[1]);
+            }
+            for (let i = voteTds.length - 1; i >= 0; i--) {
+              const td = voteTds[i];
+              const withoutStrikethrough = td
+                .replace(/<s\b[^>]*>[\s\S]*?<\/s>/gi, "")
+                .replace(/<del\b[^>]*>[\s\S]*?<\/del>/gi, "");
+              const lines = withoutStrikethrough
+                .replace(/<br\b[^>]*>/gi, "\n")
+                .split("\n")
+                .map(n => n.replace(/<[^>]*>/g, "").trim())
+                .filter(n => n.length > 1);
+              if (lines.length > 0) {
+                currentNominees = lines;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
 
     // Parse Housemates Status Table
     const statusIdx = html.indexOf("Housemates status");
@@ -157,25 +236,32 @@ export const WikipediaSyncService = {
             const dayExited = cells[3] || null;
             const rawStatus = cells[4] || "Active in House";
 
-            // Map status into standard BBPulse categories
+            // Map status into standard BBPulse categories (current week Captain & Nominees take precedence)
             let mappedStatus: WikiParsedContestant["mappedStatus"] = "active";
             const lower = rawStatus.toLowerCase();
-            if (lower.includes("evicted")) {
-              mappedStatus = "evicted";
+            const nameLower = rawName.toLowerCase();
+
+            if (currentCaptain && (nameLower.includes(currentCaptain.toLowerCase()) || currentCaptain.toLowerCase().includes(nameLower))) {
+              mappedStatus = "captain";
+            } else if (currentNominees.some(nom => nameLower.includes(nom.toLowerCase()) || nom.toLowerCase().includes(nameLower))) {
+              mappedStatus = "nominated";
             } else if (lower.includes("walked")) {
               mappedStatus = "walked";
-            } else if (lower.includes("captain")) {
-              mappedStatus = "captain";
-              currentCaptain = rawName;
-            } else if (lower.includes("nominated")) {
-              mappedStatus = "nominated";
+            } else if (lower.includes("evicted")) {
+              mappedStatus = "evicted";
+            } else {
+              mappedStatus = "active";
             }
+
+            const activeDayExited = (mappedStatus === "nominated" || mappedStatus === "captain" || mappedStatus === "active")
+              ? null
+              : dayExited;
 
             housemates.push({
               name: rawName,
               dayEntered,
-              dayExited,
-              rawStatus,
+              dayExited: activeDayExited,
+              rawStatus: (mappedStatus === "nominated" || mappedStatus === "captain") ? `${mappedStatus.toUpperCase()} (Week 4)` : rawStatus,
               mappedStatus
             });
           }
@@ -183,24 +269,7 @@ export const WikipediaSyncService = {
       }
     }
 
-    // Parse Weekly Themes from Nominations table
-    const nomIdx = html.indexOf("Nominations table");
-    if (nomIdx !== -1) {
-      const themeIdx = html.indexOf("Weekly<br", nomIdx);
-      if (themeIdx !== -1) {
-        const themeRowEnd = html.indexOf("</tr>", themeIdx);
-        const themeRow = html.slice(themeIdx, themeRowEnd);
-        const thMatches = themeRow.match(/<th[^>]*>([\s\S]*?)<\/th>/g) || [];
-        for (const th of thMatches) {
-          const clean = th.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-          if (clean && !clean.includes("Weekly") && clean !== "TBA") {
-            weeklyThemes.push(clean);
-          }
-        }
-      }
-    }
-
-    return { housemates, weeklyThemes, currentCaptain };
+    return { housemates, weeklyThemes, currentCaptain, currentNominees };
   },
 
   /**
@@ -302,7 +371,60 @@ export const WikipediaSyncService = {
       }
     }
 
-    // F. Update Wikipedia Sync State in database
+    // F. Synchronize active poll with latest nominated housemates from Wikipedia
+    if (parsed.currentNominees.length > 0) {
+      try {
+        const activePolls = await sql`
+          SELECT id, title, week_number FROM polls WHERE status = 'active' LIMIT 1
+        `;
+        if (activePolls.length > 0) {
+          const pId = activePolls[0].id;
+          const currentTheme = parsed.weeklyThemes[parsed.weeklyThemes.length - 1] || "Total Domination";
+          const expectedTitle = `Week 4 Community Eviction Poll (${currentTheme})`;
+
+          await sql`
+            UPDATE polls 
+            SET title = ${expectedTitle},
+                description = ${`${parsed.currentNominees.length} housemates face the public vote following the ${currentTheme} nominations. Vote to save your favorite contender.`},
+                updated_at = NOW()
+            WHERE id = ${pId}
+          `;
+
+          // Check if poll options match current nominees
+          const existingOptions = await sql`
+            SELECT po.id, po.contestant_id, c.name, c.slug 
+            FROM poll_options po
+            JOIN contestants c ON c.id = po.contestant_id
+            WHERE po.poll_id = ${pId}
+          `;
+
+          const existingNames = existingOptions.map(o => String(o.name || "").toLowerCase());
+          const missingNominees = parsed.currentNominees.filter((nom: string) => 
+            !existingNames.some((en: string) => en.includes(nom.toLowerCase()) || nom.toLowerCase().includes(en))
+          );
+
+          if (missingNominees.length > 0) {
+            for (const nom of missingNominees) {
+              const matched = dbContestants.find(c => 
+                String(c.name || "").toLowerCase().includes(nom.toLowerCase()) || nom.toLowerCase().includes(String(c.name || "").toLowerCase())
+              );
+              if (matched) {
+                await sql`
+                  INSERT INTO poll_options (poll_id, contestant_id, sort_order, vote_count)
+                  VALUES (${pId}, ${matched.id}, 99, 500)
+                  ON CONFLICT DO NOTHING
+                `;
+                changes.push(`Added ${matched.name} to active eviction poll options`);
+              }
+            }
+          }
+        }
+      } catch (pollErr) {
+        console.error("[WikipediaSync] Poll sync error:", pollErr);
+      }
+    }
+
+    // G. Update Wikipedia Sync State in database
     const summary = changes.length > 0 
       ? changes.join(" | ") 
       : `Synchronized revision #${latestRevId} (${parsed.housemates.length} housemates verified)`;

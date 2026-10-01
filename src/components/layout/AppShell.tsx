@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { Header } from "./Header";
@@ -13,10 +14,17 @@ import { SearchModal } from "@/components/search/SearchModal";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isLandingPage = usePathname() === "/";
 
   return (
     <ThemeProvider>
       <AuthProvider>
+        {isLandingPage ? (
+          <>
+            {children}
+            <AuthModal />
+          </>
+        ) : (
         <div className="min-h-screen flex flex-col bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#09090B] dark:text-[#F4F4F5] selection:bg-[#FF4500]/20 selection:text-[#FF4500] transition-colors duration-200 overflow-x-clip w-full">
           {/* Global Header */}
           <Header
@@ -47,6 +55,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <AuthModal />
         <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       </div>
+      )}
     </AuthProvider>
   </ThemeProvider>
 );

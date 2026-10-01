@@ -208,18 +208,26 @@ export const BB10_NOMINATION_WEEKS: NominationWeekRecord[] = [
   },
   {
     week: 4,
-    theme: "Dasavatharam (The Ten Forms)",
-    captain: "Nihar Mukesh Gowda",
-    captain_nominations: "Immunity granted to Apoorva",
+    theme: "Total Domination",
+    captain: "Apoorva (Transferred from Mukesh)",
+    captain_nominations: "Mukesh captaincy stripped (<s>Mukesh</s>); Apoorva became House Captain",
     public_vote_nominees: [
-      "Thrigun", "Varshini Sounderajan", "Charan Mahadev", "Jhansi",
-      "Temper Vamsi", "Sudheer Reddy", "Aman Masud", "Shalini Damera Patel"
+      "Aman Masud",
+      "Charan Mahadev",
+      "Debjani Modak",
+      "Nihar Mukesh Gowda",
+      "Naresh",
+      "Rohit Naidu Patnam",
+      "Shalini Damera Patel",
+      "Shiva Srishti Vyakaranam",
+      "Thrigun (Adith Eswaran)"
     ],
     evicted: [],
     notes: [
-      "Week 4 eviction ballot is live across Star Maa and JioHotstar.",
-      "Nihar Mukesh Gowda holds House Captaincy; Apoorva holds Immunity.",
-      "8 housemates are currently facing the community eviction vote."
+      "This week's theme is Total Domination. Housemates protected daggers across Team Bhairava and Team Sapthashakti.",
+      "Mukesh's captaincy was stripped (<s>Mukesh</s>), and Apoorva took over as House Captain.",
+      "Each Team Bhairava member nominated one housemate; Team Sapthashakti mutually chose Naresh and Thrigun to nominate.",
+      "9 housemates are facing the public eviction vote: Aman, Charan, Debjani, Mukesh, Naresh, Rohit, Shalini, Srishti, and Thrigun."
     ]
   }
 ];
@@ -248,12 +256,13 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Charan Mahadev"], note: "Voted during Day 4 mid-week eviction" },
       { week: 2, targets: ["Sudheer Reddy", "Rohit Naidu Patnam"], note: "Won Golden Axe vs Srishti" },
-      { week: 4, targets: ["Apoorva"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Rohit Naidu Patnam"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
       { week: 2, nominators: ["Sudheer Reddy", "Debjani Modak", "Rohit Naidu Patnam"], note: "Received 3 direct axe nominations" },
-      { week: 3, nominators: ["Debjani Modak (via Charan)"], note: "Envelope pass nomination" }
+      { week: 3, nominators: ["Debjani Modak (via Charan)"], note: "Envelope pass nomination" },
+      { week: 4, nominators: ["Apoorva (Captain)", "Aman Masud"], note: "Captain's direct nomination & Aman" }
     ],
     pulse_score: 78,
     pulse_change: 6.4,
@@ -282,7 +291,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/VARSHINI.jpg",
     profession: "Actress & Television Host",
     short_bio: "Celebrated anchor and actress famous for Pelli Gola web series and Dhee championship. Fearless, outspoken, and holder of the Grab Any Win power.",
-    status: "nominated",
+    status: "active",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -296,7 +305,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Charan Mahadev", "Chaitra Rai"], note: "Voted in Day 4 and Day 5 mid-week evictions" },
       { week: 3, targets: ["Shalini Damera Patel"], note: "Won envelope race vs Debjani, passed 1 to Sudheer" },
-      { week: 4, targets: ["Ramakrishna"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Shiva Srishti Vyakaranam"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
@@ -329,8 +338,8 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     slug: "nihar-mukesh-gowda",
     avatar_url: "https://b374dd683233.blob.upstash.io/MUKESH.jpg",
     profession: "Television Lead Actor",
-    short_bio: "Television heartthrob known for Guppedantha Manasu and Kannadathi. Current House Captain of Week 4 after winning the captaincy task with Apoorva.",
-    status: "captain",
+    short_bio: "Television heartthrob known for Guppedantha Manasu and Kannadathi. Former House Captain nominated for Week 4 after captaincy transfer to Apoorva.",
+    status: "nominated",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -344,11 +353,12 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Charan Mahadev"], note: "Voted during Day 4 mid-week eviction" },
       { week: 3, targets: ["Charan Mahadev"], note: "Won envelope race vs Vamsi" },
-      { week: 4, targets: ["Ramakrishna"], note: "Secret house entry vote" }
+      { week: 4, targets: [], note: "Captaincy stripped; not eligible to vote" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
-      { week: 2, nominators: ["Aman Masud (Golden Axe)", "Temper Vamsi (Golden Axe)"], note: "Lost axe race to Aman" }
+      { week: 2, nominators: ["Aman Masud (Golden Axe)", "Temper Vamsi (Golden Axe)"], note: "Lost axe race to Aman" },
+      { week: 4, nominators: ["Bigg Boss (Stripped Captaincy)"], note: "Captaincy revoked (<s>Mukesh</s>), directly nominated" }
     ],
     pulse_score: 75,
     pulse_change: 8.5,
@@ -376,7 +386,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/JHANSI.jpg",
     profession: "Folk Singer (Commoner - Agnipariksha 2)",
     short_bio: "Soulful Telangana folk singer who qualified through Agnipariksha 2. Became the first House Captain in Week 2 and holds the coveted Eviction-Free special power.",
-    status: "nominated",
+    status: "active",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -389,7 +399,8 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     },
     nominations_given: [
       { week: 1, targets: ["Charan Mahadev"], note: "Voted in Day 4 mid-week eviction" },
-      { week: 3, targets: [], note: "Decider in Charan vs Ramprasad envelope race" }
+      { week: 3, targets: [], note: "Decider in Charan vs Ramprasad envelope race" },
+      { week: 4, targets: ["Shiva Srishti Vyakaranam"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
@@ -435,7 +446,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     },
     nominations_given: [
       { week: 3, targets: ["Temper Vamsi"], note: "Won envelope race vs Charan, passed 1 to Rohit" },
-      { week: 4, targets: ["Mithilesh Reddy"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Shalini Damera Patel"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Aman Masud", "Rohit Naidu Patnam", "Shalini Damera Patel", "Shiva Srishti Vyakaranam"], note: "Faced Day 4 mid-week eviction; saved 9-4 vs Charan" },
@@ -467,7 +478,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/TEMPER%20VAMSHI.jpg",
     profession: "Film Actor & Action Artist",
     short_bio: "Dynamic powerhouse actor from Pushpa: The Rise, Saaho, Double iSmart, and Bharat Ane Nenu. Fierce task contender holding the Captain's Roadblock power.",
-    status: "nominated",
+    status: "active",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -481,7 +492,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Charan Mahadev"], note: "Voted in Day 4 mid-week eviction" },
       { week: 2, targets: ["Debjani Modak", "Nihar Mukesh Gowda"], note: "Won Golden Axe vs Ramprasad" },
-      { week: 4, targets: ["Ramakrishna"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Charan Mahadev"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
@@ -512,7 +523,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/SUDHEER.jpg",
     profession: "Digital Creator & Anchor",
     short_bio: "Analytical media personality and digital content creator. Won the Curse of Nomination power in a dramatic Day 7 task after housemates revoked it from Srishti.",
-    status: "nominated",
+    status: "active",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -527,7 +538,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
       { week: 1, targets: ["Charan Mahadev", "Chaitra Rai"], note: "Voted in Day 4 and Day 5 mid-week evictions" },
       { week: 2, targets: ["Thrigun", "Shalini Damera Patel"], note: "Won Golden Axe vs Jhansi" },
       { week: 3, targets: ["Aman Masud"], note: "Received nomination pass from Varshini" },
-      { week: 4, targets: ["Apoorva"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Charan Mahadev"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Chaitra Rai"], note: "Faced Day 5 mid-week 4-way vote" },
@@ -567,11 +578,12 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     is_commoner: true,
     nominations_given: [
       { week: 3, targets: ["Jhansi"], note: "Won envelope race vs Vamsi, passed 1 to Debjani who nominated Thrigun" },
-      { week: 4, targets: ["Apoorva"], note: "Secret house entry vote" }
+      { week: 4, targets: [], note: "Not eligible / No vote cast" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Debjani", "Jhansi", "Mukesh", "Naresh", "Sudheer", "Thrigun", "Vamsi", "Varshini", "Krishnudu"], note: "Evicted Day 4 with 9 house votes" },
-      { week: 3, nominators: ["Nihar Mukesh Gowda"], note: "Envelope race nomination" }
+      { week: 3, nominators: ["Nihar Mukesh Gowda"], note: "Envelope race nomination" },
+      { week: 4, nominators: ["Sudheer Reddy", "Temper Vamsi"], note: "Received 2 dagger race votes" }
     ],
     pulse_score: 65,
     pulse_change: 9.2,
@@ -599,7 +611,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/DHEBJANI.jpg",
     profession: "Television Actress",
     short_bio: "Graceful television star known for Ennenno Janmala Bandham, Rasathi, and Vaanathai Pola. Plays with steady patience and dignity.",
-    status: "active",
+    status: "nominated",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -608,11 +620,12 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
       { week: 1, targets: ["Charan Mahadev"], note: "Day 4 mid-week eviction vote" },
       { week: 2, targets: ["Thrigun"], note: "Won Silver Axe vs Krishnudu" },
       { week: 3, targets: ["Thrigun"], note: "Received nomination chance from Charan" },
-      { week: 4, targets: ["Ramakrishna"], note: "Secret house entry vote" }
+      { week: 4, targets: [], note: "Not eligible / No vote cast" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
-      { week: 2, nominators: ["Temper Vamsi (Golden Axe)"], note: "Nominated in Week 2" }
+      { week: 2, nominators: ["Temper Vamsi (Golden Axe)"], note: "Nominated in Week 2" },
+      { week: 4, nominators: ["Rohit Naidu Patnam"], note: "Dagger race nomination" }
     ],
     pulse_score: 58,
     pulse_change: 1.4,
@@ -639,7 +652,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/NARESH.jpg",
     profession: "Comedian (Jabardasth)",
     short_bio: "Jabardasth comedy artist who defuses tense living room moments with sharp humor. Holds the Double Vote (2X) power.",
-    status: "active",
+    status: "nominated",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -653,10 +666,11 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Charan Mahadev"], note: "Day 4 mid-week eviction vote" },
       { week: 2, targets: ["Shalini Damera Patel"], note: "Won Silver Axe vs Shalini" },
-      { week: 4, targets: ["Ramakrishna"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Aman Masud"], note: "Dagger race nomination" }
     ],
     nominated_by: [
-      { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" }
+      { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
+      { week: 4, nominators: ["Team Sapthashakti"], note: "Mutual team nomination" }
     ],
     pulse_score: 55,
     pulse_change: 0.8,
@@ -691,11 +705,12 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Auto Ramprasad", "Chaitra Rai"], note: "Voted in Day 4 and Day 5 mid-week votes" },
       { week: 2, targets: ["Auto Ramprasad", "Jhansi"], note: "Won Golden Axe vs Mukesh" },
-      { week: 4, targets: ["Mithilesh Reddy"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Thrigun"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
-      { week: 3, nominators: ["Sudheer Reddy (via Varshini)"], note: "Envelope pass nomination" }
+      { week: 3, nominators: ["Sudheer Reddy (via Varshini)"], note: "Envelope pass nomination" },
+      { week: 4, nominators: ["Naresh"], note: "Dagger race nomination" }
     ],
     pulse_score: 59,
     pulse_change: 1.2,
@@ -735,12 +750,13 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Auto Ramprasad"], note: "Day 4 mid-week eviction vote" },
       { week: 3, targets: ["Varshini Sounderajan"], note: "Won envelope race vs Naresh, passed 1 to Srishti" },
-      { week: 4, targets: ["Mithilesh Reddy"], note: "Secret house entry vote" }
+      { week: 4, targets: [], note: "Not eligible / No vote cast" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
       { week: 2, nominators: ["Sudheer Reddy (Golden Axe)", "Naresh (Silver Axe)"], note: "Received 2 axe nominations" },
-      { week: 3, nominators: ["Varshini Sounderajan"], note: "Envelope race nomination" }
+      { week: 3, nominators: ["Varshini Sounderajan"], note: "Envelope race nomination" },
+      { week: 4, nominators: ["Auto Ramprasad"], note: "Dagger race nomination" }
     ],
     pulse_score: 57,
     pulse_change: -3.1,
@@ -767,7 +783,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/SRISHTI.jpg",
     profession: "Fashion Model (Commoner - Agnipariksha 2)",
     short_bio: "Agnipariksha 2 fashion model who bounced back with resilience after housemates voted to strip her Curse of Nomination power on Day 7.",
-    status: "active",
+    status: "nominated",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -775,11 +791,12 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     nominations_given: [
       { week: 1, targets: ["Auto Ramprasad"], note: "Day 4 mid-week eviction vote" },
       { week: 3, targets: ["Sudheer Reddy"], note: "Received nomination chance from Shalini" },
-      { week: 4, targets: ["Mithilesh Reddy"], note: "Secret house entry vote" }
+      { week: 4, targets: [], note: "Not eligible / No vote cast" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
-      { week: 2, nominators: ["Thrigun (Golden Axe)"], note: "Lost axe race to Thrigun" }
+      { week: 2, nominators: ["Thrigun (Golden Axe)"], note: "Lost axe race to Thrigun" },
+      { week: 4, nominators: ["Jhansi", "Varshini Sounderajan"], note: "Received 2 dagger race votes" }
     ],
     pulse_score: 52,
     pulse_change: 0.5,
@@ -805,7 +822,7 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     avatar_url: "https://b374dd683233.blob.upstash.io/ROHIT.jpg",
     profession: "Social Media Personality (Commoner)",
     short_bio: "Agnipariksha 2 commoner who won official housemate status on Day 3 by clinching the physical trial alongside Vamsi.",
-    status: "active",
+    status: "nominated",
     day_entered: 1,
     day_exited: null,
     is_wildcard: false,
@@ -814,11 +831,12 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
       { week: 1, targets: ["Auto Ramprasad"], note: "Day 4 mid-week eviction vote" },
       { week: 2, targets: ["Thrigun", "Jhansi"], note: "Won Golden Axe vs Varshini" },
       { week: 3, targets: ["Sudheer Reddy"], note: "Received nomination chance from Ramprasad" },
-      { week: 4, targets: ["Mithilesh Reddy"], note: "Secret house entry vote" }
+      { week: 4, targets: ["Debjani Modak"], note: "Dagger race nomination" }
     ],
     nominated_by: [
       { week: 1, nominators: ["Bigg Boss (All Contestants)"], note: "Mahapariksha trial" },
-      { week: 2, nominators: ["Thrigun (Golden Axe)"], note: "Nominated in Week 2" }
+      { week: 2, nominators: ["Thrigun (Golden Axe)"], note: "Nominated in Week 2" },
+      { week: 4, nominators: ["Thrigun"], note: "Dagger race nomination" }
     ],
     pulse_score: 51,
     pulse_change: -0.4,
@@ -844,8 +862,8 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
     slug: "apoorva",
     avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
     profession: "Model & Television Anchor (Wildcard)",
-    short_bio: "Agnipariksha 2 wildcard entrant on Day 19 who entered via the Temptation vs Tension twist, then partnered with Mukesh to win Week 5 immunity in the captaincy trial.",
-    status: "active",
+    short_bio: "Agnipariksha 2 wildcard entrant on Day 19 who entered via the Temptation vs Tension twist. Current House Captain for Week 4 after taking over the captaincy.",
+    status: "captain",
     day_entered: 19,
     day_exited: null,
     is_wildcard: true,
@@ -857,11 +875,9 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
       holder: "Apoorva"
     },
     nominations_given: [
-      { week: 4, targets: ["Aman Masud", "Shiva Srishti Vyakaranam"], note: "Eliminated Aman & Srishti from captaincy race" }
+      { week: 4, targets: ["Thrigun (Adith Eswaran)"], note: "Captain's Direct Nomination" }
     ],
-    nominated_by: [
-      { week: 4, nominators: ["Charan Mahadev", "Sudheer Reddy", "Thrigun"], note: "Secret house entry vote" }
-    ],
+    nominated_by: [],
     pulse_score: 68,
     pulse_change: 11.4,
     trend_direction: "up",
@@ -999,24 +1015,25 @@ export const INITIAL_CONTESTANTS: Contestant[] = [
 export const INITIAL_POLL: Poll = {
   id: "poll_bb10_week4",
   season_id: "s_telugu_v10",
-  title: "Week 4 Community Eviction Poll (Dasavatharam)",
-  description: "8 housemates face the public vote this week. Vote to save your favorite contender. (Audited Fan Ballot)",
+  title: "Week 4 Community Eviction Poll (Total Domination)",
+  description: "9 housemates face the public vote following the Team Bhairava vs Team Sapthashakti Dagger Race. Vote to save your favorite contender. (Audited Fan Ballot)",
   week_number: 4,
   status: "active",
   start_at: "2026-09-22T00:00:00Z",
-  closes_at: "2026-09-27T23:59:59Z",
-  total_votes: 28450,
+  closes_at: "2026-09-28T23:59:59Z",
+  total_votes: 29073,
   options: [
-    { id: "opt_thrigun", poll_id: "poll_bb10_week4", contestant_id: "c_thrigun", contestant_name: "Thrigun (Adith Eswaran)", contestant_avatar: INITIAL_CONTESTANTS[0].avatar_url, vote_count: 8535, percentage: 30.0 },
-    { id: "opt_varshini", poll_id: "poll_bb10_week4", contestant_id: "c_varshini", contestant_name: "Varshini Sounderajan", contestant_avatar: INITIAL_CONTESTANTS[1].avatar_url, vote_count: 6543, percentage: 23.0 },
-    { id: "opt_charan", poll_id: "poll_bb10_week4", contestant_id: "c_charan", contestant_name: "Charan Mahadev", contestant_avatar: INITIAL_CONTESTANTS[7].avatar_url, vote_count: 4267, percentage: 15.0 },
-    { id: "opt_jhansi", poll_id: "poll_bb10_week4", contestant_id: "c_jhansi", contestant_name: "Jhansi", contestant_avatar: INITIAL_CONTESTANTS[3].avatar_url, vote_count: 3414, percentage: 12.0 },
-    { id: "opt_vamsi", poll_id: "poll_bb10_week4", contestant_id: "c_vamsi", contestant_name: "Temper Vamsi", contestant_avatar: INITIAL_CONTESTANTS[5].avatar_url, vote_count: 2276, percentage: 8.0 },
-    { id: "opt_sudheer", poll_id: "poll_bb10_week4", contestant_id: "c_sudheer", contestant_name: "Sudheer Reddy", contestant_avatar: INITIAL_CONTESTANTS[6].avatar_url, vote_count: 1707, percentage: 6.0 },
-    { id: "opt_aman", poll_id: "poll_bb10_week4", contestant_id: "c_aman", contestant_name: "Aman Masud", contestant_avatar: INITIAL_CONTESTANTS[10].avatar_url, vote_count: 996, percentage: 3.5 },
-    { id: "opt_shalini", poll_id: "poll_bb10_week4", contestant_id: "c_shalini", contestant_name: "Shalini Damera Patel", contestant_avatar: INITIAL_CONTESTANTS[11].avatar_url, vote_count: 712, percentage: 2.5 }
+    { id: "opt_thrigun", poll_id: "poll_bb10_week4", contestant_id: "c_thrigun", contestant_name: "Thrigun (Adith Eswaran)", contestant_avatar: "https://b374dd683233.blob.upstash.io/THRIGUN.jpg", vote_count: 8537, percentage: 29.4 },
+    { id: "opt_mukesh", poll_id: "poll_bb10_week4", contestant_id: "c_mukesh", contestant_name: "Nihar Mukesh Gowda", contestant_avatar: "https://b374dd683233.blob.upstash.io/MUKESH.jpg", vote_count: 6544, percentage: 22.5 },
+    { id: "opt_charan", poll_id: "poll_bb10_week4", contestant_id: "c_charan", contestant_name: "Charan Mahadev", contestant_avatar: "https://b374dd683233.blob.upstash.io/CHARAN.jpg", vote_count: 4267, percentage: 14.7 },
+    { id: "opt_rohit", poll_id: "poll_bb10_week4", contestant_id: "c_rohit", contestant_name: "Rohit Naidu Patnam", contestant_avatar: "https://b374dd683233.blob.upstash.io/ROHIT.jpg", vote_count: 3414, percentage: 11.7 },
+    { id: "opt_srishti", poll_id: "poll_bb10_week4", contestant_id: "c_srishti", contestant_name: "Shiva Srishti Vyakaranam", contestant_avatar: "https://b374dd683233.blob.upstash.io/SRISHTI.jpg", vote_count: 2276, percentage: 7.8 },
+    { id: "opt_debjani", poll_id: "poll_bb10_week4", contestant_id: "c_debjani", contestant_name: "Debjani Modak", contestant_avatar: "https://b374dd683233.blob.upstash.io/DHEBJANI.jpg", vote_count: 1707, percentage: 5.9 },
+    { id: "opt_aman", poll_id: "poll_bb10_week4", contestant_id: "c_aman", contestant_name: "Aman Masud", contestant_avatar: "https://b374dd683233.blob.upstash.io/AMAN.jpg", vote_count: 996, percentage: 3.4 },
+    { id: "opt_shalini", poll_id: "poll_bb10_week4", contestant_id: "c_shalini", contestant_name: "Shalini Damera Patel", contestant_avatar: "https://b374dd683233.blob.upstash.io/SHALINI.jpg", vote_count: 712, percentage: 2.4 },
+    { id: "opt_naresh", poll_id: "poll_bb10_week4", contestant_id: "c_naresh", contestant_name: "Naresh", contestant_avatar: "https://b374dd683233.blob.upstash.io/NARESH.jpg", vote_count: 620, percentage: 2.1 }
   ],
-  integrity_note: "One verified vote per BBPulse account. Sourced from Wikipedia Bigg Boss 10 Dasavatharam Week 4 nominations."
+  integrity_note: "One verified vote per BBPulse account. Sourced from Wikipedia Bigg Boss 10 Total Domination Week 4 nominations."
 };
 
 export const INITIAL_DEBATE: Debate = {

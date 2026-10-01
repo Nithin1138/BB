@@ -24,10 +24,11 @@ import {
 } from "lucide-react";
 
 export default function NominationsLedgerPage() {
-  const [selectedWeek, setSelectedWeek] = useState<number>(3);
+  const latestWeekNumber = Math.max(...BB10_NOMINATION_WEEKS.map(w => w.week));
+  const [selectedWeek, setSelectedWeek] = useState<number>(latestWeekNumber);
   const [selectedContestantId, setSelectedContestantId] = useState<string>("c_thrigun");
 
-  const activeWeekData = BB10_NOMINATION_WEEKS.find(w => w.week === selectedWeek) || BB10_NOMINATION_WEEKS[2];
+  const activeWeekData = BB10_NOMINATION_WEEKS.find(w => w.week === selectedWeek) || BB10_NOMINATION_WEEKS[BB10_NOMINATION_WEEKS.length - 1];
   const inspectedContestant = INITIAL_CONTESTANTS.find(c => c.id === selectedContestantId) || INITIAL_CONTESTANTS[0];
 
   return (
@@ -280,17 +281,17 @@ export default function NominationsLedgerPage() {
 
           {/* Week Selector Tabs */}
           <div className="flex items-center gap-1 bg-[#F4F4F5] dark:bg-[#1A1A1E] border border-[#E4E4E7] dark:border-[#232328] rounded-md p-1 font-mono text-xs overflow-x-auto no-scrollbar max-w-full">
-            {[1, 2, 3, 4].map(w => (
+            {BB10_NOMINATION_WEEKS.map(nw => (
               <button
-                key={w}
-                onClick={() => setSelectedWeek(w)}
+                key={nw.week}
+                onClick={() => setSelectedWeek(nw.week)}
                 className={`px-3 py-1.5 rounded-sm text-[10px] uppercase tracking-wider font-semibold transition-all cursor-pointer shrink-0 ${
-                  selectedWeek === w
+                  selectedWeek === nw.week
                     ? "bg-[#09090B] text-white dark:bg-[#F4F4F5] dark:text-[#09090B] shadow-2xs"
                     : "text-[#71717A] dark:text-[#A1A1AA] hover:text-[#09090B] dark:hover:text-[#F4F4F5]"
                 }`}
               >
-                Week {w}
+                Week {nw.week}
               </button>
             ))}
           </div>
@@ -354,7 +355,29 @@ export default function NominationsLedgerPage() {
               {INITIAL_CONTESTANTS.map(c => {
                 const givenForWeek = c.nominations_given?.find(ng => ng.week === activeWeekData.week);
                 const receivedForWeek = c.nominated_by?.find(nb => nb.week === activeWeekData.week);
-                const isNominatedThisWeek = activeWeekData.public_vote_nominees.some(name => name.includes(c.name) || c.name.includes(name));
+
+                // Week-specific status calculation
+                const isCaptainThisWeek =
+                  activeWeekData.captain.toLowerCase().includes(c.name.toLowerCase()) ||
+                  (activeWeekData.week === 4 && (c.slug === "apoorva" || c.name.toLowerCase().includes("apoorva"))) ||
+                  (activeWeekData.week === 3 && c.slug === "nihar-mukesh-gowda") ||
+                  (activeWeekData.week === 2 && c.slug === "jhansi");
+
+                const isNominatedThisWeek = activeWeekData.public_vote_nominees.some(name => {
+                  const cleanNom = name.toLowerCase();
+                  const cleanC = c.name.toLowerCase();
+                  return cleanNom.includes(cleanC) || cleanC.includes(cleanNom);
+                });
+
+                const isEvictedThisWeek =
+                  (c.id === "c_chaitra" && activeWeekData.week >= 1) ||
+                  (c.id === "c_krishnudu" && activeWeekData.week >= 2) ||
+                  (c.id === "c_charan" && activeWeekData.week === 1);
+
+                const isWalkedThisWeek = (c.id === "c_mithilesh" && activeWeekData.week >= 3);
+                const isNotInHouseThisWeek =
+                  (c.id === "c_apoorva" && activeWeekData.week < 3) ||
+                  (c.id === "c_mithilesh" && activeWeekData.week < 3);
 
                 return (
                   <tr
@@ -372,21 +395,25 @@ export default function NominationsLedgerPage() {
                       </div>
                     </td>
                     <td className="py-3 px-4 whitespace-nowrap">
-                      {isNominatedThisWeek ? (
-                        <span className="px-2 py-0.5 bg-[#FF4500]/10 text-[#FF4500] border border-[#FF4500]/30 rounded-xs text-[10px] font-bold">
-                          Nominated
-                        </span>
-                      ) : c.status === "captain" ? (
+                      {isCaptainThisWeek ? (
                         <span className="px-2 py-0.5 bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/30 rounded-xs text-[10px] font-bold">
                           Captain
                         </span>
-                      ) : c.status === "evicted" ? (
+                      ) : isNominatedThisWeek ? (
+                        <span className="px-2 py-0.5 bg-[#FF4500]/10 text-[#FF4500] border border-[#FF4500]/30 rounded-xs text-[10px] font-bold">
+                          Nominated
+                        </span>
+                      ) : isWalkedThisWeek ? (
+                        <span className="px-2 py-0.5 bg-[#FF4500]/10 text-[#FF4500] border border-[#FF4500]/30 rounded-xs text-[10px]">
+                          Walked
+                        </span>
+                      ) : isEvictedThisWeek ? (
                         <span className="px-2 py-0.5 bg-[#71717A]/10 text-[#71717A] border border-[#71717A]/30 rounded-xs text-[10px]">
                           Evicted
                         </span>
-                      ) : c.status === "walked" ? (
-                        <span className="px-2 py-0.5 bg-[#FF4500]/10 text-[#FF4500] border border-[#FF4500]/30 rounded-xs text-[10px]">
-                          Walked
+                      ) : isNotInHouseThisWeek ? (
+                        <span className="px-2 py-0.5 bg-[#71717A]/10 text-[#71717A] border border-[#71717A]/30 rounded-xs text-[10px]">
+                          Not in House
                         </span>
                       ) : (
                         <span className="px-2 py-0.5 bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/30 rounded-xs text-[10px]">
