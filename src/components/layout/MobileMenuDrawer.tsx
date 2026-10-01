@@ -19,7 +19,9 @@ import {
   Check,
   Target,
   Calendar,
-  Radio
+  Radio,
+  Globe,
+  ExternalLink
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
@@ -295,6 +297,35 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               </span>
               <ChevronRight className="w-4 h-4 text-[#FF4500]" />
             </Link>
+
+            {/* Wikipedia Automated Live Sync Card */}
+            <div className="mt-3 p-2.5 rounded-lg bg-[#FAF9F6] dark:bg-[#18181C] border border-[#E8E6DF] dark:border-[#24242A]">
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-1.5 font-medium text-[#09090B] dark:text-[#F4F4F5]">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+                  </span>
+                  <Globe className="w-3.5 h-3.5 text-[#10B981]" />
+                  <span>Wikipedia Live Sync</span>
+                </div>
+                <span className="text-[10px] font-mono text-[#10B981] bg-[#10B981]/10 px-1.5 py-0.5 rounded font-bold">
+                  ACTIVE
+                </span>
+              </div>
+              <p className="text-[10.5px] text-[#71717A] mt-1 font-mono leading-tight">
+                MediaWiki rev-hash stream monitors Bigg Boss 10 updates in sub-second latency.
+              </p>
+              <a
+                href="https://en.wikipedia.org/wiki/Bigg_Boss_(Telugu_TV_series)_season_10"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-1.5 inline-flex items-center gap-1 text-[10px] text-[#FF4500] hover:underline font-mono"
+              >
+                <span>View Wikipedia Source</span>
+                <ExternalLink className="w-2.5 h-2.5" />
+              </a>
+            </div>
           </div>
         </div>
 

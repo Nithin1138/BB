@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS contestants (
   avatar_url TEXT NOT NULL,
   profession VARCHAR(100),
   short_bio TEXT,
-  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'nominated', 'evicted', 'captain')),
+  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'nominated', 'evicted', 'captain', 'walked')),
   pulse_score NUMERIC(5, 2) NOT NULL DEFAULT 50.00,
   pulse_change NUMERIC(5, 2) NOT NULL DEFAULT 0.00,
   quote TEXT,
@@ -383,3 +383,28 @@ CREATE TABLE IF NOT EXISTS upcoming_events (
 );
 
 CREATE INDEX IF NOT EXISTS idx_upcoming_events_scheduled ON upcoming_events(scheduled_time ASC);
+
+-- 27. WIKIPEDIA SYNC STATE (Real-time Wikipedia tracking with low-latency revision polling)
+CREATE TABLE IF NOT EXISTS wikipedia_sync_state (
+  id VARCHAR(50) PRIMARY KEY DEFAULT 'bb_telugu_wiki',
+  article_title VARCHAR(255) NOT NULL,
+  last_revision_id BIGINT NOT NULL DEFAULT 0,
+  last_revision_time TIMESTAMPTZ,
+  last_synced_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  sync_count INTEGER NOT NULL DEFAULT 0,
+  last_changes_summary TEXT,
+  status VARCHAR(20) NOT NULL DEFAULT 'synced',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 28. WIKIPEDIA SYNC LOGS (Audit trail of detected Wikipedia edits and latency metrics)
+CREATE TABLE IF NOT EXISTS wikipedia_sync_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  revision_id BIGINT NOT NULL,
+  revision_time TIMESTAMPTZ,
+  synced_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  changes_detected JSONB,
+  latency_ms INTEGER,
+  status VARCHAR(20) NOT NULL DEFAULT 'success'
+);

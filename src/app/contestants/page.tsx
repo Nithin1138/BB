@@ -1,18 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { INITIAL_CONTESTANTS } from "@/lib/mock-data";
+import { Contestant } from "@/types";
 import { Sparkline } from "@/components/ui/Sparkline";
 import { ArrowUpRight, ArrowDownRight, Minus, UserCheck, Search, Filter, Zap, ArrowRight, DollarSign, Skull, Shield } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 export default function ContestantsPage() {
   const { user, toggleFollowContestant } = useAuth();
+  const [contestantsList, setContestantsList] = useState<Contestant[]>(INITIAL_CONTESTANTS);
   const [filter, setFilter] = useState<"all" | "active" | "nominated" | "captain" | "exited">("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filtered = INITIAL_CONTESTANTS.filter(c => {
+  const loadContestants = async () => {
+    try {
+      const res = await fetch("/api/contestants");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.contestants && data.contestants.length > 0) {
+          setContestantsList(data.contestants);
+        }
+      }
+    } catch {
+      // fallback
+    }
+  };
+
+  useEffect(() => {
+    loadContestants();
+
+    const handleSync = () => {
+      loadContestants();
+    };
+
+    window.addEventListener("bbpulse:wikipedia_synced", handleSync);
+    return () => {
+      window.removeEventListener("bbpulse:wikipedia_synced", handleSync);
+    };
+  }, []);
+
+  const filtered = contestantsList.filter(c => {
     if (filter === "active" && (c.status === "evicted" || c.status === "walked")) return false;
     if (filter === "nominated" && c.status !== "nominated") return false;
     if (filter === "captain" && c.status !== "captain") return false;

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { StorageService } from "@/lib/storage";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { WikipediaLiveSyncBanner } from "@/components/sync/WikipediaLiveSyncBanner";
 
 interface HeaderProps {
   onOpenSearch: () => void;
@@ -98,8 +99,11 @@ export function Header({ onOpenSearch, onOpenMobileMenu }: HeaderProps) {
           </nav>
         </div>
 
-        {/* Right actions: Search, Notifications, Role Switcher / Profile */}
+        {/* Right actions: Wikipedia Sync, Search, Notifications, Role Switcher / Profile */}
         <div className="flex items-center gap-1 sm:gap-2.5">
+          {/* Wikipedia Live Sync Engine Indicator */}
+          <WikipediaLiveSyncBanner />
+
           {/* Global Search trigger */}
           <button
             onClick={onOpenSearch}
